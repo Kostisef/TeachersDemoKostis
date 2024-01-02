@@ -21,22 +21,22 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="teacher : ${teachers}">
-            <td th:text="${teacher.id}"></td>
-            <td th:text="${teacher.getFName()}"></td>
-            <td th:text="${teacher.getLName()}"></td>
-            <td th:text="${teacher.getUsername()}"></td>
-            <td th:text="${teacher.getEmail()}"></td>
-            <td th:text="${teacher.getTelephone()}"></td>
+        <tr th:each="user : ${teacherList}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.getFirstname()}"></td>
+            <td th:text="${user.getLastname()}"></td>
+            <td th:text="${user.getUsername()}"></td>
+            <td th:text="${user.getEmail()}"></td>
+            <td th:text="${user.getTel()}"></td>
             <td>
-                <a th:href="@{'/edit/' + ${teacher.id}}">Edit</a>
-                <a th:href="@{'/delete/' + ${teacher.id}}">Delete</a>
+                <a th:href="@{'/edit/' + ${user.id}}">Edit</a>
+                <a th:href="@{'/delete/' + ${user.id}}">Delete</a>
             </td>
         </tr>
         </tbody>
     </table>
 
-    <!-- Add form for adding a new teacher -->
+    <!-- Add form for adding a new user -->
 </div>
 </body>
 </html>

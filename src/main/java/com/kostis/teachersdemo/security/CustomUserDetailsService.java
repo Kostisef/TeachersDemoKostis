@@ -1,7 +1,7 @@
-package com.kostis.TeachersDemoKostis.security;
+package com.kostis.teachersdemo.security;
 
-import com.kostis.TeachersDemoKostis.entities.Teacher;
-import com.kostis.TeachersDemoKostis.repo.TeacherRepository;
+import com.kostis.teachersdemo.entities.User;
+import com.kostis.teachersdemo.repo.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,12 +17,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println("Inside custom loadUserByUsername");
-        Teacher teacher = teacherRepository.findByEmail(email);
-        if (teacher == null){
-            throw new UsernameNotFoundException("User not found with email: " + email);
+
+        User user = teacherRepository.findByEmail(email);
+        if (user == null){
+            String msg = "User not found with email: " + email;
+            System.out.println(msg);
+            throw new UsernameNotFoundException(msg);
         }
 
-        return teacher;
+        System.out.println("User found! "+ user);
+        return new CustomUserDetails(user);
     }
 }

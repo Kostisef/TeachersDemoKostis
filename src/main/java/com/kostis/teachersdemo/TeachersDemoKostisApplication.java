@@ -1,4 +1,4 @@
-package com.kostis.TeachersDemoKostis;
+package com.kostis.teachersdemo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,6 +1,6 @@
-package com.kostis.TeachersDemoKostis.service;
+package com.kostis.teachersdemo.service;
 
-import com.kostis.TeachersDemoKostis.entities.Teacher;
+import com.kostis.teachersdemo.entities.User;
 
 import java.util.List;
 
@@ -9,22 +9,22 @@ public interface TeacherService {
     /**
      * FIND ALL
      */
-    List<Teacher> getAllTeachers();
+    List<User> getAllTeachers();
 
     /**
      * FIND BY ID
      */
-    Teacher getTeacherById(Long id);
+    User getTeacherById(Long id);
 
     /**
      * FIND BY ID
      */
-    Teacher getTeacherByEmail(String email);
+    User getTeacherByEmail(String email);
 
     /**
      * Save
      */
-    void saveTeacher(Teacher teacher);
+    void saveTeacher(User user);
 
     /**
      * Delete

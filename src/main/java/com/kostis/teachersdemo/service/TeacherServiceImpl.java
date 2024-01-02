@@ -1,7 +1,7 @@
-package com.kostis.TeachersDemoKostis.service;
+package com.kostis.teachersdemo.service;
 
-import com.kostis.TeachersDemoKostis.entities.Teacher;
-import com.kostis.TeachersDemoKostis.repo.TeacherRepository;
+import com.kostis.teachersdemo.entities.User;
+import com.kostis.teachersdemo.repo.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class TeacherServiceImpl implements TeacherService {
      * FIND ALL
      */
     @Override
-    public List<Teacher> getAllTeachers() {
+    public List<User> getAllTeachers() {
         return teacherRepository.findAll();
     }
 
@@ -28,7 +28,7 @@ public class TeacherServiceImpl implements TeacherService {
      * @param id
      */
     @Override
-    public Teacher getTeacherById(Long id) {
+    public User getTeacherById(Long id) {
         return teacherRepository.findById(id).orElse(null);
     }
 
@@ -38,18 +38,18 @@ public class TeacherServiceImpl implements TeacherService {
      * @param email
      */
     @Override
-    public Teacher getTeacherByEmail(String email) {
+    public User getTeacherByEmail(String email) {
         return teacherRepository.findByEmail(email);
     }
 
     /**
      * Save
      *
-     * @param teacher
+     * @param user
      */
     @Override
-    public void saveTeacher(Teacher teacher) {
-        teacherRepository.save(teacher);
+    public void saveTeacher(User user) {
+        teacherRepository.save(user);
     }
 
     /**
