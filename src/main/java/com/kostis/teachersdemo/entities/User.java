@@ -55,7 +55,7 @@ public class User implements Serializable {
     private Integer startYear;
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TeacherCourseAssociation> taughtCourses;
+    private List<Course> taughtCourses;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StudentCourseAssociation> enrolledCourses;
