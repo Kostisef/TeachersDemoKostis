@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang=en xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - TeacherDemoKostis</title>
+</head>
+<body>
+<div class="container">
+    <h2>Teachers List</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Telephone</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="teacher : ${teachers}">
+            <td th:text="${teacher.id}"></td>
+            <td th:text="${teacher.getFName()}"></td>
+            <td th:text="${teacher.getLName()}"></td>
+            <td th:text="${teacher.getUsername()}"></td>
+            <td th:text="${teacher.getEmail()}"></td>
+            <td th:text="${teacher.getTelephone()}"></td>
+            <td>
+                <a th:href="@{'/edit/' + ${teacher.id}}">Edit</a>
+                <a th:href="@{'/delete/' + ${teacher.id}}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Add form for adding a new teacher -->
+</div>
+</body>
+</html>
