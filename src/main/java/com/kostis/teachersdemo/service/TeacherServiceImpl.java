@@ -2,7 +2,6 @@ package com.kostis.teachersdemo.service;
 
 import com.kostis.teachersdemo.entities.User;
 import com.kostis.teachersdemo.repo.TeacherRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,8 +9,11 @@ import java.util.List;
 @Service
 public class TeacherServiceImpl implements TeacherService {
 
-    @Autowired
-    private TeacherRepository teacherRepository;
+    private final TeacherRepository teacherRepository;
+
+    public TeacherServiceImpl(TeacherRepository teacherRepository) {
+        this.teacherRepository = teacherRepository;
+    }
 
 
     /**
