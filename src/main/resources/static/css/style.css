@@ -2,10 +2,19 @@
 
 body {
     font-family: Arial, sans-serif;
+    width: 70%;
+    margin: 0 auto;
+    border: 1px solid lightgray;
+    /*! background-color: #ececec; */
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 70%;
+    margin: 70px auto 50px;
+}
+
+.login-container {
+    max-width: 300px;
     margin: 50px auto;
 }
 
@@ -24,16 +33,24 @@ input {
 }
 
 button {
-    background-color: #4caf50;
+    background-color: #00607c;
+    border-radius: 20px;
+    border: 0;
     color: white;
     padding: 10px;
     cursor: pointer;
 }
 
+button:hover{
+    background-color: #00c7e3;
+}
+
+
+
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 th, td {
@@ -43,8 +60,13 @@ th, td {
 }
 
 th {
-    background-color: #4caf50;
+    background-color: #003b52;
+    text-align: center;
     color: white;
+}
+
+tr:hover {
+    background-color: #e7eaf6!important; /* Change the color as needed */
 }
 
 
@@ -61,19 +83,6 @@ th {
     border-radius: 4px;
 }
 
-/* Style the Save Changes button */
-.btn-primary {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-}
 
 /* Responsive styles for smaller screens */
 @media (max-width: 600px) {
@@ -115,3 +124,107 @@ th {
     right: 10px;
     cursor: pointer;
 }
+
+/* Header Styles */
+.header {
+    background-color: #003b52;
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    width: 70%;
+    left: 15%;
+    z-index: 1000;
+    display: table; /* Use table display to make it look like a table */
+}
+
+.header-content {
+    display: table-row; /* Display as a table row */
+}
+
+.header-title, .logout-button {
+    display: table-cell; /* Display as a table cell */
+    vertical-align: middle;
+    padding: 0 10px; /* Add padding for spacing */
+}
+
+.header-title {
+    color: white;
+    font-size: 30px;
+    padding: 0 0 0 100px;
+    text-align: center;
+}
+
+a.logout-button {
+    background-color: #008ead;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px 0 10px 0;
+    float: right;
+    margin-right: 7px;
+    text-align: center;
+    width: 95px;
+}
+
+a.logout-button span {
+    max-width: 85px; /* Adjust the max-width as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+a.logout-button i {
+    margin-left: 5px;
+}
+
+a.logout-button:hover{
+    background-color: #00c7e3;
+}
+
+
+.table-header {
+    padding-left: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0
+}
+
+h3, button {
+    margin: 0;
+}
+
+
+
+
+/* Add these styles for modal formatting */
+.modal-header {
+    text-align: center;
+}
+
+.modal-hr {
+    width: 80%;
+    border: 1px solid #ddd;
+    margin: 10px auto;
+}
+
+.modal-body {
+    text-align: center;
+}
+
+.modal-footer {
+    padding-top: 15px;
+    text-align: right;
+}
+
+.modal-footer button {
+    width: 90px;
+}
+
+.confirm-btn{
+    border: 3px solid #00c7e3;
+}
+

@@ -1,5 +1,6 @@
 package com.kostis.teachersdemo.controller;
 
+import com.kostis.teachersdemo.security.CustomUserDetails;
 import com.kostis.teachersdemo.service.impl.UserServiceImpl;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -7,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @Controller
@@ -21,7 +23,6 @@ public class PagesController {
 
     @GetMapping("/login")
     public String loginAction(Model model) {
-        System.out.println("Inside loginAction()");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication!=null && !(authentication instanceof AnonymousAuthenticationToken)) {
             return "redirect:/dashboard";
@@ -31,17 +32,20 @@ public class PagesController {
     }
 
 
-    @GetMapping("/logout")
-    public String logoutAction(Model model){
-        System.out.println("Inside logoutAction()");
-        return null;
-    }
+//    @GetMapping("/logout")
+//    public String logoutAction(Model model){
+//        System.out.println("Inside logoutAction()");
+//        return null;
+//    }
 
     @GetMapping("/dashboard")
     public String redirectToDashboard(Model model) {
-        System.out.println("Inside redirectToDashboard()");
         model.addAttribute("teacherList", userServiceImpl.getAllTeachers());
         model.addAttribute("studentList", userServiceImpl.getAllStudents());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        model.addAttribute("username", ((CustomUserDetails) authentication.getPrincipal()).getRealUsername());
 //        model.addAttribute("roleList", roleServiceImpl.getAllRoles());
 //        model.addAttribute("courseList", courseServiceImpl.getAllCourses());
         return "/dashboard";

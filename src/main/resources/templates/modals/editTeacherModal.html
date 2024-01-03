@@ -2,7 +2,7 @@
     <!-- Modal -->
 
     <div class="modal-content">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <span class="close-btn" onclick="closeModal('editTeacherModal')">&times;</span>
         <h2>Edit Teacher</h2>
         <form th:action="@{/saveTeacher}" method="post">
             <input type="hidden" id="mdl-id" name="id" />
@@ -26,6 +26,12 @@
                 <label for="mdl-email">Email:</label>
                 <input type="email" class="form-control" id="mdl-email" name="email" required/>
             </div>
+
+            <div class="form-group">
+                <label for="mdl-startYear">Start Year:</label>
+                <input type="number" min="1930" max="2024" step="1" class="form-control" id="mdl-startYear" name="startYear"/>
+            </div>
+
 
             <button type="submit" class="btn btn-primary">Save Changes</button>
         </form>

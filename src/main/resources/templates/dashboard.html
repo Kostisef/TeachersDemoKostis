@@ -9,107 +9,150 @@
     <title>Home - TeacherDemoKostis</title>
 </head>
 <body>
-<div class="container">
-    <h2>Teachers List</h2>
-    <button title="Add new Teacher"
-            type="button"> Add Teacher
-        <i class="fa-solid fa-plus"></i>
-    </button>
-    <table>
-
-        <thead>
-
-        <tr>
-            <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Telephone</th>
-            <th>Start Year</th>
-            <th>Courses</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="teacher : ${teacherList}">
-            <td th:text="${teacher.id}"></td>
-            <td th:text="${teacher.firstname}"></td>
-            <td th:text="${teacher.getLastname()}"></td>
-            <td th:text="${teacher.getUsername()}"></td>
-            <td th:text="${teacher.getEmail()}"></td>
-            <td th:text="${teacher.getTel()}"></td>
-            <td th:text="${teacher.getStartYear()}"></td>
-            <td th:text="${teacher.getTaughtCourses().size()}"></td>
-            <td>
-                <button title="Edit Teacher"
-                        th:data-id="${teacher.id}"
-                        onclick="openEditTeacherModal(this.getAttribute('data-id'))"
-                        type="button">
-                    <i class="fa-solid fa-pen"></i>
-                </button>
-                <button title="Delete Teacher"
-                        th:data-id="${teacher.id}"
-                        onclick="openDeleteTeacherModal(this.getAttribute('data-id'))"
-                        type="button">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
-<!--                <a title="Delete Teacher" th:href="@{'/user/editTeacher/' + ${teacher.id}}">Delete</a>-->
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <!-- Add form for adding a new user -->
+<div class="header">
+    <div class="header-content">
+        <div class="header-title">TeachersDemoKostis Java FullStack Web App</div>
+        <a href="#" th:href="@{/logout}" class="logout-button" title="Logout"> Logout
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </a>
+    </div>
 </div>
-
 <div class="container">
-    <h2>Student List</h2>
+    <div class="table-header">
+        <h3 th:text="'Teachers List (Total records: ' + ${teacherList.size()} + ')'"></h3>
+        <button title="Add new Teacher" type="button"> Add Teacher
+            <i class="fa-solid fa-plus"></i>
+        </button>
+    </div>
     <table>
         <thead>
-        <tr>
-            <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Telephone</th>
-            <th>Start Year</th>
-            <th>Semester</th>
-            <th>Enrolled Courses</th>
-            <th>Action</th>
-        </tr>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Start Year</th>
+                <th>Courses</th>
+                <th>Action</th>
+            </tr>
         </thead>
-        <tbody>
-        <tr th:each="student : ${studentList}">
-            <td th:text="${student.id}"></td>
-            <td th:text="${student.getFirstname()}"></td>
-            <td th:text="${student.getLastname()}"></td>
-            <td th:text="${student.getUsername()}"></td>
-            <td th:text="${student.getEmail()}"></td>
-            <td th:text="${student.getTel()}"></td>
-            <td th:text="${student.getStartYear()}"></td>
-            <td th:text="${student.getSemester()}"></td>
-            <td th:text="${student.getEnrolledCourses().size()}"></td>
-            <td>
-                <a title="Edit Student" th:href="@{'/edit/' + ${student.id}}">Edit</a>
-                <a title="Delete Student" th:href="@{'/delete/' + ${student.id}}">Delete</a>
-            </td>
-        </tr>
+        <tbody th:if="${#lists.isEmpty(teacherList)}">
+            <tr>
+                <td colspan="8">No records found</td>
+            </tr>
         </tbody>
+        <tbody th:if="${not #lists.isEmpty(teacherList)}" class="table-body">
+            <tr th:each="teacher : ${teacherList}">
+                <td th:text="${teacher.id}"></td>
+                <td th:text="${teacher.firstname}"></td>
+                <td th:text="${teacher.getLastname()}"></td>
+                <td th:text="${teacher.getUsername()}"></td>
+                <td th:text="${teacher.getEmail()}"></td>
+                <td th:text="${teacher.getStartYear()}"></td>
+                <td th:text="${teacher.getTaughtCourses().size()}"></td>
+                <td style="text-align: center;">
+                    <button title="Edit Teacher" th:data-id="${teacher.id}"
+                            onclick="openEditTeacherModal(this.getAttribute('data-id'))" type="button">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button title="Delete Teacher" th:data-id="${teacher.id}"
+                            onclick="openDeleteTeacherModal(this.getAttribute('data-id'))" type="button">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+
     </table>
 
 </div>
+
+<div class="container">
+    <div class="table-header">
+
+        <h3 th:text="'Student List (Total records: ' + ${studentList.size()} + ')'"></h3>
+        <button title="Add new Student" type="button"> Add Student
+            <i class="fa-solid fa-plus"></i>
+        </button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Start Year</th>
+                <th>Semester</th>
+                <th>Enrolled Courses</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody th:if="${#lists.isEmpty(studentList)}" class="table-body">
+            <tr>
+                <td colspan="9">No records found</td>
+            </tr>
+        </tbody>
+        <tbody th:if="${not #lists.isEmpty(studentList)}">
+            <tr th:each="student : ${studentList}">
+                <td th:text="${student.id}"></td>
+                <td th:text="${student.getFirstname()}"></td>
+                <td th:text="${student.getLastname()}"></td>
+                <td th:text="${student.getUsername()}"></td>
+                <td th:text="${student.getEmail()}"></td>
+                <td th:text="${student.getStartYear()}"></td>
+                <td th:text="${student.getSemester()}"></td>
+                <td th:text="${student.getEnrolledCourses().size()}"></td>
+                <td style="text-align: center;">
+                    <button title="Edit Student" th:data-id="${student.id}" type="button"
+                            onclick="openEditStudentModal(this.getAttribute('data-id'))">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+
+                    <button title="Delete Student" th:data-id="${student.id}" type="button"
+                            onclick="openDeleteStudentModal(this.getAttribute('data-id'))">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
 
 <!-- Edit Teacher Info - Modal -->
 <div id="editTeacherModal" class="modal">
     <div th:replace="modals/editTeacherModal :: editTeacherFragment"></div>
 </div>
 
+<!-- Edit Student Info - Modal -->
+<div id="editStudentModal" class="modal">
+    <div th:replace="modals/editStudentModal :: editStudentFragment"></div>
+</div>
+
 <!-- Delete Teacher Record - Modal -->
 <div id="deleteTeacherModal" class="modal">
     <div th:replace="modals/deleteTeacherModal :: deleteTeacherFragment"></div>
 </div>
+
+<!-- Delete Student Record - Modal -->
+<div id="deleteStudentModal" class="modal">
+    <div th:replace="modals/deleteStudentModal :: deleteStudentFragment"></div>
+</div>
+
+
+<footer>
+    <p style="text-align: center">
+        <span>© 2024 </span>
+        <span style="font-weight:bold; color: #008ead">Efthimis Kostis</span>
+        <span> - All Rights Reserved.</span>
+    </p>
+</footer>
 
 <script type="text/javascript" src="../static/js/main.js" th:src="@{/js/main.js}"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"  crossorigin="anonymous"></script>

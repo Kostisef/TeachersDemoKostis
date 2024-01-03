@@ -1,13 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/style.css}"/>
-    <link rel="shortcut icon" th:href="@{/images/favicon.png}" sizes = "48x48" type="image/x-icon">
-    <title>Edit Student - TeacherDemoKostis</title>
-</head>
-<body>
+<div th:fragment="editStudentFragment">
+    <!-- Modal -->
 
-</body>
-</html>
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('editStudentModal')">&times;</span>
+        <h2>Edit Student</h2>
+        <form th:action="@{/saveStudent}" method="post">
+            <input type="hidden" id="mdl-student-id" name="id" />
+
+            <div class="form-group">
+                <label for="mdl-student-firstname">First Name:</label>
+                <input type="text" class="form-control" id="mdl-student-firstname" name="firstname" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="mdl-student-lastname">Last Name:</label>
+                <input type="text" class="form-control" id="mdl-student-lastname" name="lastname" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="mdl-student-username">Username:</label>
+                <input type="text" class="form-control" id="mdl-student-username" name="username" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="mdl-student-email">Email:</label>
+                <input type="email" class="form-control" id="mdl-student-email" name="email" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="mdl-student-startYear">Start Year:</label>
+                <input type="number" min="1930" max="2024" step="1" class="form-control" id="mdl-student-startYear" name="startYear"/>
+            </div>
+
+            <div class="form-group">
+                <label for="mdl-student-semester">Semester:</label>
+                <input type="number" min="1" max="40" step="1" class="form-control" id="mdl-student-semester" name="semester"/>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
+
+</div>
+

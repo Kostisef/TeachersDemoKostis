@@ -12,6 +12,8 @@ import java.util.Optional;
 @Controller
 public class TeacherController {
 
+    private static final String MAIN_URL = "redirect:/dashboard";
+
     private final UserRepository userRepository;
 
     public TeacherController(UserRepository userRepository) {
@@ -22,15 +24,16 @@ public class TeacherController {
     @PostMapping("/addNewTeacher")
     public String addNewTeacher(User teacher){
         userRepository.save(teacher);
-        return "redirect:/dashboard";
+        return MAIN_URL;
     }
 
     @PostMapping("/deleteTeacher")
     public String deleteTeacher(@RequestParam Integer teacherId){
         System.out.println("TeacherId to delete: "+ teacherId);
+
         User teacherToDelete = getTeacher(teacherId);
         userRepository.delete(teacherToDelete);
-        return "redirect:/dashboard";
+        return MAIN_URL;
     }
 
     @RequestMapping("/getTeacher")
@@ -42,18 +45,21 @@ public class TeacherController {
     @PostMapping("/saveTeacher")
     public String saveTeacher(User selectedTeacher) {
         // Perform validation if needed
-        User existingTeacher = userRepository.findById(selectedTeacher.getId());
+        User teacherToUpdate = userRepository.findById(selectedTeacher.getId());
 
-        if (existingTeacher !=null){
+        if (teacherToUpdate !=null){
             // Convert model to entity!
-            existingTeacher.setFirstname(selectedTeacher.getFirstname());
-            existingTeacher.setLastname(selectedTeacher.getLastname());
+            teacherToUpdate.setFirstname(selectedTeacher.getFirstname());
+            teacherToUpdate.setLastname(selectedTeacher.getLastname());
+            teacherToUpdate.setUsername(selectedTeacher.getUsername());
+            teacherToUpdate.setEmail(selectedTeacher.getEmail());
+            teacherToUpdate.setStartYear(selectedTeacher.getStartYear());
 
             // Save the edited teacher to the database
-            userRepository.save(existingTeacher);
+            userRepository.save(teacherToUpdate);
         }
 
-        return "redirect:/dashboard";
+        return MAIN_URL;
     }
 
 }

@@ -27,11 +27,9 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
     @ManyToOne
     @JoinColumn(name = "ROLE_ID", nullable = false)
     private Role role;
-
 
     @Column(name = "FIRSTNAME", nullable = false)
     private String firstname;
@@ -48,8 +46,6 @@ public class User implements Serializable {
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
-    @Column(name = "TEL")
-    private String tel;
 
     @Column(name = "SEMESTER")
     private Integer semester;
