@@ -1,6 +1,9 @@
 package com.kostis.teachersdemo.entities;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +12,8 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.util.List;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -30,19 +33,19 @@ public class User implements Serializable {
     private Role role;
 
 
-    @Column(name = "FIRSTNAME")
+    @Column(name = "FIRSTNAME", nullable = false)
     private String firstname;
 
-    @Column(name = "LASTNAME")
+    @Column(name = "LASTNAME", nullable = false)
     private String lastname;
 
-    @Column(name = "USERNAME")
+    @Column(name = "USERNAME", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "PASSWORD")
+    @Column(name = "PASSWORD", nullable = false)
     private String password;
 
     @Column(name = "TEL")
@@ -54,9 +57,11 @@ public class User implements Serializable {
     @Column(name = "START_YEAR")
     private Integer startYear;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Course> taughtCourses;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StudentCourseAssociation> enrolledCourses;
 

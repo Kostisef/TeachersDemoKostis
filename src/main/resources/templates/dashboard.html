@@ -3,11 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="shortcut icon" th:href="@{/images/favicon.png}" sizes = "48x48" type="image/x-icon">
     <title>Home - TeacherDemoKostis</title>
 </head>
 <body>
 <div class="container">
     <h2>Teachers List</h2>
+    <button title="Add new Teacher"
+            type="button"> Add Teacher
+        <i class="fa-solid fa-plus"></i>
+    </button>
+    <table>
+
+        <thead>
+
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Telephone</th>
+            <th>Start Year</th>
+            <th>Courses</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="teacher : ${teacherList}">
+            <td th:text="${teacher.id}"></td>
+            <td th:text="${teacher.firstname}"></td>
+            <td th:text="${teacher.getLastname()}"></td>
+            <td th:text="${teacher.getUsername()}"></td>
+            <td th:text="${teacher.getEmail()}"></td>
+            <td th:text="${teacher.getTel()}"></td>
+            <td th:text="${teacher.getStartYear()}"></td>
+            <td th:text="${teacher.getTaughtCourses().size()}"></td>
+            <td>
+                <button title="Edit Teacher"
+                        th:data-id="${teacher.id}"
+                        onclick="openEditTeacherModal(this.getAttribute('data-id'))"
+                        type="button">
+                    <i class="fa-solid fa-pen"></i>
+                </button>
+                <button title="Delete Teacher"
+                        th:data-id="${teacher.id}"
+                        onclick="openDeleteTeacherModal(this.getAttribute('data-id'))"
+                        type="button">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+<!--                <a title="Delete Teacher" th:href="@{'/user/editTeacher/' + ${teacher.id}}">Delete</a>-->
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Add form for adding a new user -->
+</div>
+
+<div class="container">
+    <h2>Student List</h2>
     <table>
         <thead>
         <tr>
@@ -17,26 +74,47 @@
             <th>Username</th>
             <th>Email</th>
             <th>Telephone</th>
+            <th>Start Year</th>
+            <th>Semester</th>
+            <th>Enrolled Courses</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user : ${teacherList}">
-            <td th:text="${user.id}"></td>
-            <td th:text="${user.getFirstname()}"></td>
-            <td th:text="${user.getLastname()}"></td>
-            <td th:text="${user.getUsername()}"></td>
-            <td th:text="${user.getEmail()}"></td>
-            <td th:text="${user.getTel()}"></td>
+        <tr th:each="student : ${studentList}">
+            <td th:text="${student.id}"></td>
+            <td th:text="${student.getFirstname()}"></td>
+            <td th:text="${student.getLastname()}"></td>
+            <td th:text="${student.getUsername()}"></td>
+            <td th:text="${student.getEmail()}"></td>
+            <td th:text="${student.getTel()}"></td>
+            <td th:text="${student.getStartYear()}"></td>
+            <td th:text="${student.getSemester()}"></td>
+            <td th:text="${student.getEnrolledCourses().size()}"></td>
             <td>
-                <a th:href="@{'/edit/' + ${user.id}}">Edit</a>
-                <a th:href="@{'/delete/' + ${user.id}}">Delete</a>
+                <a title="Edit Student" th:href="@{'/edit/' + ${student.id}}">Edit</a>
+                <a title="Delete Student" th:href="@{'/delete/' + ${student.id}}">Delete</a>
             </td>
         </tr>
         </tbody>
     </table>
 
-    <!-- Add form for adding a new user -->
 </div>
+
+<!-- Edit Teacher Info - Modal -->
+<div id="editTeacherModal" class="modal">
+    <div th:replace="modals/editTeacherModal :: editTeacherFragment"></div>
+</div>
+
+<!-- Delete Teacher Record - Modal -->
+<div id="deleteTeacherModal" class="modal">
+    <div th:replace="modals/deleteTeacherModal :: deleteTeacherFragment"></div>
+</div>
+
+<script type="text/javascript" src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"  crossorigin="anonymous"></script>
+
+<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" crossorigin="anonymous">-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>-->
 </body>
 </html>

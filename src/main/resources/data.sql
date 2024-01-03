@@ -5,10 +5,10 @@ INSERT INTO `ROLE` (NAME, DESCRIPTION) VALUES
 
 
 INSERT INTO `USER` (ROLE_ID, FIRSTNAME, LASTNAME, USERNAME, EMAIL, PASSWORD, TEL, SEMESTER, START_YEAR) VALUES
-    (1, 'Test [Teacher1]', 'Kostis', 'e.kostis', 'teacher@test.com', '$2a$10$2tzGWztiPorX3D2vYwoAnu4CLpdnwS96HZGj5NDVdVv3d.n22xkVW', '1234567890', 2013, null),
-    (2, 'Test [Student]', 'Kostis', 'e.kostis2', 'studentt@test.com', '$2a$10$2tzGWztiPorX3D2vYwoAnu4CLpdnwS96HZGj5NDVdVv3d.n22xkVW', '1234567890', 2023, 1),
+    (1, 'Test [Teacher1]', 'Kostis', 'e.kostis', 'teacher@test.com', '$2a$10$2tzGWztiPorX3D2vYwoAnu4CLpdnwS96HZGj5NDVdVv3d.n22xkVW', '1234567890', null, 1999),
+    (2, 'Test [Student]', 'Kostis', 'e.kostis2', 'student@test.com', '$2a$10$2tzGWztiPorX3D2vYwoAnu4CLpdnwS96HZGj5NDVdVv3d.n22xkVW', '1234567890', 10, 2013),
     (3, 'Test [Admin]', 'Kostis', 'e.kostis3', 'admin@test.com', '$2a$10$2tzGWztiPorX3D2vYwoAnu4CLpdnwS96HZGj5NDVdVv3d.n22xkVW', '1234567890', null, null),
-    (1, 'Test [Teacher2]', 'Kostis', 'e.kostis4', 'teacher2@test.com', '$2a$10$2tzGWztiPorX3D2vYwoAnu4CLpdnwS96HZGj5NDVdVv3d.n22xkVW', '1234567890', 2013, null);
+    (1, 'Test [Teacher2]', 'Kostis', 'e.kostis4', 'teacher2@test.com', '$2a$10$2tzGWztiPorX3D2vYwoAnu4CLpdnwS96HZGj5NDVdVv3d.n22xkVW', '1234567890', null, 2006);
 
 
 INSERT INTO `COURSE` (NAME, DESCRIPTION, SEMESTER, TEACHER_ID) VALUES

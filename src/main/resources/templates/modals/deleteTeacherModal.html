@@ -1,0 +1,25 @@
+<div th:fragment="deleteTeacherFragment">
+    <!-- Modal -->
+
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2>Delete Teacher</h2>
+
+        <input type="hidden" id="mdl-delete-id" name="id" />
+        <div> You are going to delete that Teacher record. Are you sure? </div>
+
+
+        <div>
+            <button type="button" onclick="confirmTeacherDeletion()"> Yes
+                <i class="fa-solid fa-check"></i>
+            </button>
+
+            <button type="button" onclick="closeModal('deleteTeacherModal')">No
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+    </div>
+
+</div>
+

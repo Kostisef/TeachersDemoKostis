@@ -1,5 +1,6 @@
 package com.kostis.teachersdemo.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,7 +37,7 @@ public class Course implements Serializable {
     @OneToMany(mappedBy = "course")
     private List<StudentCourseAssociation> studentAssociations;
 
-
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "TEACHER_ID", referencedColumnName = "ID")
     private User teacher;
