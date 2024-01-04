@@ -1,19 +1,28 @@
 package com.kostis.teachersdemo.service.impl;
 
+import com.kostis.teachersdemo.entities.Course;
 import com.kostis.teachersdemo.entities.User;
+import com.kostis.teachersdemo.repo.CourseRepository;
+import com.kostis.teachersdemo.repo.RoleRepository;
 import com.kostis.teachersdemo.repo.UserRepository;
 import com.kostis.teachersdemo.service.IUserService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements IUserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    private final CourseRepository courseRepository;
+
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, CourseRepository courseRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.courseRepository = courseRepository;
     }
 
 
@@ -70,6 +79,27 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public void deleteUser(Long id) {
+
         userRepository.deleteById(id);
+    }
+
+
+    public void deleteTeacher(User teacher){
+        for (Course course : teacher.getTaughtCourses()){
+            course.setTeacher(null);
+        }
+        courseRepository.saveAllAndFlush(teacher.getTaughtCourses());
+        userRepository.delete(teacher);
+    }
+
+    @Override
+    public void createNewTeacher(User teacher) {
+        teacher.setSemester(null);
+        teacher.setTaughtCourses(Collections.emptyList());
+        teacher.setEnrolledCourses(Collections.emptyList());
+        teacher.setRole(roleRepository.findById(1)); // 1: Teacher
+
+
+        userRepository.save(teacher);
     }
 }

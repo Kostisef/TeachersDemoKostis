@@ -27,7 +27,7 @@
 <div class="container">
     <div class="table-header">
         <h3 th:text="'Teachers List (Total records: ' + ${teacherList.size()} + ')'"></h3>
-        <button title="Add new Teacher" type="button"> Add Teacher
+        <button title="Add new Teacher" type="button" onclick="openModal('addTeacherModal')"> Add Teacher
             <i class="fa-solid fa-plus"></i>
         </button>
     </div>
@@ -173,7 +173,12 @@
             <td th:text="${course.name}"></td>
             <td th:text="${course.description}"></td>
             <td th:text="${course.semester}"></td>
-            <td th:text="${course.teacher.lastname + ' ' + course.teacher.firstname}"></td>
+
+
+            <td th:if="${course.teacher !=null }" th:text="${course.teacher.lastname + ' ' + course.teacher.firstname}"></td>
+            <td th:if="${course.teacher == null}">N/A</td>
+
+
             <td th:text="${course.studentAssociations.size()}"></td>
             <td style="text-align: center;">
                 <button title="Edit Course" th:data-id="${course.id}" type="button"
@@ -235,6 +240,28 @@
 </div>
 
 
+<!-- Create new Teacher - Modal -->
+<div id="addTeacherModal" class="modal">
+    <div th:replace="modals/addTeacherModal :: addTeacherFragment"></div>
+</div>
+
+<!--&lt;!&ndash; Create new Student - Modal &ndash;&gt;-->
+<!--<div id="addStudentModal" class="modal">-->
+<!--    <div th:replace="modals/addStudentModal :: addStudentFragment"></div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Create new Course - Modal &ndash;&gt;-->
+<!--<div id="addCourseModal" class="modal">-->
+<!--    <div th:replace="modals/addCourseModal :: addCourseFragment"></div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Create new Role - Modal &ndash;&gt;-->
+<!--<div id="addRoleModal" class="modal">-->
+<!--    <div th:replace="modals/addRoleModal :: addRoleFragment"></div>-->
+<!--</div>-->
+
+
+
 <!-- Edit Teacher Info - Modal -->
 <div id="editTeacherModal" class="modal">
     <div th:replace="modals/editTeacherModal :: editTeacherFragment"></div>
@@ -262,8 +289,9 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-    const flag = [[${successMessage}]];
-    if (flag) {
+    const hasMsg = [[${successMessage}]];
+    if (hasMsg) {
+        alert("show growl");
         triggerGrowlModal([[${successMessage}]]);
     }
     /*]]>*/

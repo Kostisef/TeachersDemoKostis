@@ -23,7 +23,7 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -53,12 +53,14 @@ public class User implements Serializable {
     @Column(name = "START_YEAR")
     private Integer startYear;
 
+
     @JsonManagedReference
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.PERSIST, orphanRemoval = false)
     private List<Course> taughtCourses;
 
+
     @JsonBackReference
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<StudentCourseAssociation> enrolledCourses;
 
 

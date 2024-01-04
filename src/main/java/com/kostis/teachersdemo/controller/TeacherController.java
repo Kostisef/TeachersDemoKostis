@@ -2,6 +2,7 @@ package com.kostis.teachersdemo.controller;
 
 import com.kostis.teachersdemo.entities.User;
 import com.kostis.teachersdemo.repo.UserRepository;
+import com.kostis.teachersdemo.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,24 +14,44 @@ public class TeacherController {
     private static final String MAIN_URL = "redirect:/dashboard";
 
     private final UserRepository userRepository;
+    private final UserServiceImpl userService;
 
-    public TeacherController(UserRepository userRepository) {
+    public TeacherController(UserRepository userRepository, UserServiceImpl userService) {
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
 
     @PostMapping("/addNewTeacher")
-    public String addNewTeacher(User teacher){
-        userRepository.save(teacher);
+    public String addNewTeacher(User teacher, RedirectAttributes redirectAttributes){
+
+        String growlMsg = "Teacher created successfully";
+        try{
+            userService.createNewTeacher(teacher);
+
+        } catch (Exception e){
+            growlMsg = "Teacher not created...";
+            System.out.println(e.getMessage());
+        }
+
+        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         return MAIN_URL;
     }
 
     @PostMapping("/deleteTeacher")
-    public String deleteTeacher(@RequestParam Integer teacherId){
+    public String deleteTeacher(@RequestParam Integer teacherId, RedirectAttributes redirectAttributes){
         System.out.println("TeacherId to delete: "+ teacherId);
+        String growlMsg = "Teacher deleted successfully";
+        try{
+            User teacherToDelete = getTeacher(teacherId);
+            userService.deleteTeacher(teacherToDelete);
 
-        User teacherToDelete = getTeacher(teacherId);
-        userRepository.delete(teacherToDelete);
+        } catch (Exception e){
+            growlMsg = "Failed to delete teacher...";
+        }
+
+
+        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         return MAIN_URL;
     }
 

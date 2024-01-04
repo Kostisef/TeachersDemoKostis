@@ -36,4 +36,6 @@ public interface IUserService {
      */
 
     void deleteUser(Long id);
+
+    void createNewTeacher(User teacher);
 }
