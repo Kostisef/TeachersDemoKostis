@@ -1,6 +1,8 @@
 package com.kostis.teachersdemo.controller;
 
 import com.kostis.teachersdemo.security.CustomUserDetails;
+import com.kostis.teachersdemo.service.impl.CourseServiceImpl;
+import com.kostis.teachersdemo.service.impl.RoleServiceImpl;
 import com.kostis.teachersdemo.service.impl.UserServiceImpl;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -8,16 +10,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 
 @Controller
 public class PagesController {
 
-    private final UserServiceImpl userServiceImpl;
+    private final UserServiceImpl userService;
+    private final RoleServiceImpl roleService;
+    private final CourseServiceImpl courseService;
 
-    public PagesController(UserServiceImpl userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
+    public PagesController(UserServiceImpl userService, RoleServiceImpl roleService, CourseServiceImpl courseService) {
+        this.userService = userService;
+        this.roleService = roleService;
+        this.courseService = courseService;
     }
 
 
@@ -40,9 +44,11 @@ public class PagesController {
 
     @GetMapping("/dashboard")
     public String redirectToDashboard(Model model) {
-        model.addAttribute("teacherList", userServiceImpl.getAllTeachers());
-        model.addAttribute("studentList", userServiceImpl.getAllStudents());
-
+        model.addAttribute("teacherList", userService.getAllTeachers());
+        model.addAttribute("studentList", userService.getAllStudents());
+        model.addAttribute("roleList", roleService.getAllRoles());
+        model.addAttribute("courseList", courseService.getAllCourses());
+//        model.addAttribute("successMessage", "Entity saved successfully");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         model.addAttribute("username", ((CustomUserDetails) authentication.getPrincipal()).getRealUsername());
@@ -55,19 +61,19 @@ public class PagesController {
     @GetMapping("/401")
     public String redirectTo401(Model model) {
         System.out.println("Inside redirectTo401()");
-        return "/401";
+        return "error-401";
     }
 
     @GetMapping("/404")
     public String redirectTo404(Model model) {
         System.out.println("Inside redirectTo404()");
-        return "/404";
+        return "error-404";
     }
 
     @GetMapping("/500")
     public String redirectTo500(Model model) {
         System.out.println("Inside redirectTo500()");
-        return "/500";
+        return "error-500";
     }
 
 }

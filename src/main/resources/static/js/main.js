@@ -116,7 +116,22 @@ function openEditStudentModal(studentId){
     });
 }
 
+function triggerGrowlModal(msg){
+    document.getElementById('growl-msg').innerHTML = msg;
 
+    // Show the modal
+    openModal('growlModal');
+
+    // Set a timeout to close the modal after 5 seconds
+    setTimeout(function () {
+        const modal = document.querySelector('.custom-message-modal');
+        modal.classList.add('fade-out');
+        setTimeout(function () {
+            modal.classList.remove('fade-out');
+            closeModal('growlModal');
+        }, 500);
+    }, 2000);
+}
 
 
 function openModal(modalId) {

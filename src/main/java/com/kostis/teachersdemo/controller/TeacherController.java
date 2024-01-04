@@ -2,12 +2,10 @@ package com.kostis.teachersdemo.controller;
 
 import com.kostis.teachersdemo.entities.User;
 import com.kostis.teachersdemo.repo.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class TeacherController {
@@ -43,7 +41,7 @@ public class TeacherController {
     }
 
     @PostMapping("/saveTeacher")
-    public String saveTeacher(User selectedTeacher) {
+    public String saveTeacher(User selectedTeacher, RedirectAttributes redirectAttributes) {
         // Perform validation if needed
         User teacherToUpdate = userRepository.findById(selectedTeacher.getId());
 
@@ -58,6 +56,8 @@ public class TeacherController {
             // Save the edited teacher to the database
             userRepository.save(teacherToUpdate);
         }
+
+        redirectAttributes.addFlashAttribute("successMessage", "Teacher saved successfully");
 
         return MAIN_URL;
     }
