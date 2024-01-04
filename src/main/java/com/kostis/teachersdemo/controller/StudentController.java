@@ -4,6 +4,7 @@ import com.kostis.teachersdemo.entities.User;
 import com.kostis.teachersdemo.repo.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class StudentController {
@@ -25,11 +26,18 @@ public class StudentController {
     }
 
     @PostMapping("/deleteStudent")
-    public String deleteTeacher(@RequestParam Integer studentId){
-        System.out.println("StudentId to delete: "+ studentId);
+    public String deleteStudent(User studentIncoming, RedirectAttributes redirectAttributes){
+        System.out.println("StudentId to delete: "+ studentIncoming.getId());
+        String growlMsg = "Student deleted successfully";
 
-        User studentToDelete = getStudent(studentId);
-        userRepository.delete(studentToDelete);
+        try{
+            User studentToDelete = getStudent(studentIncoming.getId());
+            userRepository.delete(studentToDelete);
+        } catch (Exception e){
+            growlMsg = "Failed to delete student...";
+        }
+
+        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
 
         return MAIN_URL;
     }

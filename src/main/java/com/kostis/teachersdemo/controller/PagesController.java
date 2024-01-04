@@ -36,14 +36,9 @@ public class PagesController {
     }
 
 
-//    @GetMapping("/logout")
-//    public String logoutAction(Model model){
-//        System.out.println("Inside logoutAction()");
-//        return null;
-//    }
-
     @GetMapping("/dashboard")
     public String redirectToDashboard(Model model) {
+        System.out.println("Hello from redirectToDashboard()");
         model.addAttribute("teacherList", userService.getAllTeachers());
         model.addAttribute("studentList", userService.getAllStudents());
         model.addAttribute("roleList", roleService.getAllRoles());

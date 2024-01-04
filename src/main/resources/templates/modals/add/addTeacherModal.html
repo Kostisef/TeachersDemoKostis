@@ -3,9 +3,13 @@
 
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal('addTeacherModal')">&times;</span>
-        <h2>Add Teacher</h2>
         <form th:action="@{/addNewTeacher}" method="post">
             <input type="hidden" id="mdl-id" name="id" />
+
+            <div class="modal-header">
+                <h2>Add Teacher</h2>
+                <hr class="modal-hr" />
+            </div>
 
             <div class="form-group">
                 <label for="mdl-teacher-add-firstname">First Name:</label>

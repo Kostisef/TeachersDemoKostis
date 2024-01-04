@@ -90,9 +90,14 @@
     text-align: center;
 }
 
+.modal-header h2 {
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
 .modal-hr {
     width: 80%;
-    border: 1px solid #ddd;
+    border: 1px solid #00607c;
     margin: 10px auto;
 }
 

@@ -1,0 +1,33 @@
+<div th:fragment="deleteStudentFragment">
+    <!-- Modal -->
+
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('deleteStudentModal')">&times;</span>
+
+        <form th:action="@{/deleteStudent}" method="post">
+            <input type="hidden" id="mdl-delete-student-id" name="id" />
+
+            <div class="modal-header">
+                <h2>Delete Student</h2>
+                <hr class="modal-hr" />
+            </div>
+
+            <div class="modal-body">
+                <i class="fa-solid fa-exclamation-triangle"></i>
+
+                <span>You are going to delete that Student record. Are you sure?</span>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="confirm-btn"> Delete!
+                    <i class="fa-solid fa-check"></i>
+                </button>
+
+                <button type="button" onclick="closeModal('deleteStudentModal')"> Cancel
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>

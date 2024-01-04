@@ -242,44 +242,44 @@
 
 <!-- Create new Teacher - Modal -->
 <div id="addTeacherModal" class="modal">
-    <div th:replace="modals/addTeacherModal :: addTeacherFragment"></div>
+    <div th:replace="modals/add/addTeacherModal :: addTeacherFragment"></div>
 </div>
 
 <!--&lt;!&ndash; Create new Student - Modal &ndash;&gt;-->
 <!--<div id="addStudentModal" class="modal">-->
-<!--    <div th:replace="modals/addStudentModal :: addStudentFragment"></div>-->
+<!--    <div th:replace="modals/add/addStudentModal :: addStudentFragment"></div>-->
 <!--</div>-->
 
 <!--&lt;!&ndash; Create new Course - Modal &ndash;&gt;-->
 <!--<div id="addCourseModal" class="modal">-->
-<!--    <div th:replace="modals/addCourseModal :: addCourseFragment"></div>-->
+<!--    <div th:replace="modals/add/addCourseModal :: addCourseFragment"></div>-->
 <!--</div>-->
 
 <!--&lt;!&ndash; Create new Role - Modal &ndash;&gt;-->
 <!--<div id="addRoleModal" class="modal">-->
-<!--    <div th:replace="modals/addRoleModal :: addRoleFragment"></div>-->
+<!--    <div th:replace="modals/add/addRoleModal :: addRoleFragment"></div>-->
 <!--</div>-->
 
 
 
 <!-- Edit Teacher Info - Modal -->
 <div id="editTeacherModal" class="modal">
-    <div th:replace="modals/editTeacherModal :: editTeacherFragment"></div>
+    <div th:replace="modals/edit/editTeacherModal :: editTeacherFragment"></div>
 </div>
 
 <!-- Edit Student Info - Modal -->
 <div id="editStudentModal" class="modal">
-    <div th:replace="modals/editStudentModal :: editStudentFragment"></div>
+    <div th:replace="modals/edit/editStudentModal :: editStudentFragment"></div>
 </div>
 
 <!-- Delete Teacher Record - Modal -->
 <div id="deleteTeacherModal" class="modal">
-    <div th:replace="modals/deleteTeacherModal :: deleteTeacherFragment"></div>
+    <div th:replace="modals/delete/deleteTeacherModal :: deleteTeacherFragment"></div>
 </div>
 
 <!-- Delete Student Record - Modal -->
 <div id="deleteStudentModal" class="modal">
-    <div th:replace="modals/deleteStudentModal :: deleteStudentFragment"></div>
+    <div th:replace="modals/delete/deleteStudentModal :: deleteStudentFragment"></div>
 </div>
 
 <!--Growl messages - Modal-->
@@ -289,11 +289,19 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-    const hasMsg = [[${successMessage}]];
-    if (hasMsg) {
-        alert("show growl");
-        triggerGrowlModal([[${successMessage}]]);
+
+    // document.addEventListener("DOMContentLoaded", function() {
+    //    alert('hi');
+    // });
+
+    window.onload = function () {
+        const hasMsg = [[${successMessage}]];
+        console.log("hasMsg: "+ hasMsg);
+        if (hasMsg) {
+            triggerGrowlModal([[${successMessage}]]);
+        }
     }
+
     /*]]>*/
 </script>
 

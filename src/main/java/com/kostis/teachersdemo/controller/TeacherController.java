@@ -6,7 +6,9 @@ import com.kostis.teachersdemo.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class TeacherController {
@@ -16,9 +18,12 @@ public class TeacherController {
     private final UserRepository userRepository;
     private final UserServiceImpl userService;
 
-    public TeacherController(UserRepository userRepository, UserServiceImpl userService) {
+    private final PagesController pagesController;
+
+    public TeacherController(UserRepository userRepository, UserServiceImpl userService, PagesController pagesController) {
         this.userRepository = userRepository;
         this.userService = userService;
+        this.pagesController = pagesController;
     }
 
 
@@ -39,19 +44,19 @@ public class TeacherController {
     }
 
     @PostMapping("/deleteTeacher")
-    public String deleteTeacher(@RequestParam Integer teacherId, RedirectAttributes redirectAttributes){
-        System.out.println("TeacherId to delete: "+ teacherId);
+    public String deleteTeacher(User teacherIncoming, RedirectAttributes redirectAttributes){
+        System.out.println("TeacherId to delete: "+ teacherIncoming.getId());
         String growlMsg = "Teacher deleted successfully";
         try{
-            User teacherToDelete = getTeacher(teacherId);
+            User teacherToDelete = getTeacher(teacherIncoming.getId());
             userService.deleteTeacher(teacherToDelete);
 
         } catch (Exception e){
             growlMsg = "Failed to delete teacher...";
         }
 
-
         redirectAttributes.addFlashAttribute("successMessage", growlMsg);
+
         return MAIN_URL;
     }
 

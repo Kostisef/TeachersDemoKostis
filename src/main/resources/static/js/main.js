@@ -1,38 +1,4 @@
 // Teacher
-function confirmTeacherDeletion(){
-    var teacherId = $('#mdl-delete-id').val();
-
-    $.ajax({
-        url: '/teachersDemoKostis/deleteTeacher',
-        type: 'POST',
-        data: { 'teacherId': teacherId },
-        success: function(teacher) {
-            location.reload();
-        },
-        error: function() {
-            console.error('Error deleting teacher.');
-        }
-    });
-}
-
-// Student
-function confirmStudentDeletion(){
-    var studentId = $('#mdl-delete-id').val();
-
-    $.ajax({
-        url: '/teachersDemoKostis/deleteStudent',
-        type: 'POST',
-        data: { 'studentId': studentId },
-        success: function(teacher) {
-            location.reload();
-        },
-        error: function() {
-            console.error('Error deleting student.');
-        }
-    });
-}
-
-// Teacher
 function openDeleteTeacherModal(teacherId){
     $.ajax({
         url: '/teachersDemoKostis/getTeacher?id='+teacherId,
@@ -44,11 +10,10 @@ function openDeleteTeacherModal(teacherId){
         },
         error: function() {
             // Handle errors if needed
-            console.error('Error fetching teacher information.');
+            console.error('Error fetching Teacher information.');
         }
     });
 }
-
 
 // Student
 function openDeleteStudentModal(studentId){
@@ -57,11 +22,12 @@ function openDeleteStudentModal(studentId){
         type: 'GET',
         dataType: 'json',
         success: function(student) {
-            $('#mdl-delete-id').val(student.id);
+            $('#mdl-delete-student-id').val(student.id);
+
             openModal('deleteStudentModal');
         },
         error: function() {
-            console.error('Error fetching student information.');
+            console.error('Error fetching Student information.');
         }
     });
 }
@@ -117,6 +83,7 @@ function openEditStudentModal(studentId){
 }
 
 function triggerGrowlModal(msg){
+    console.log("triggerGrowlModal() called with msg: "+ msg);
     document.getElementById('growl-msg').innerHTML = msg;
 
     // Show the modal
