@@ -1,0 +1,59 @@
+<div th:fragment="teacherTableFragment">
+
+    <!--Teachers-->
+    <div class="container">
+        <div class="table-header">
+            <h3 th:text="'Teachers List (Total records: ' + ${teacherList.size()} + ')'"></h3>
+            <button title="Add new Teacher" type="button" onclick="openModal('addTeacherModal')"> Add Teacher
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+        <div class="tableFixHead">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Start Year</th>
+                    <th>Courses</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody th:if="${#lists.isEmpty(teacherList)}">
+                <tr>
+                    <td colspan="8">No records found</td>
+                </tr>
+                </tbody>
+                <tbody th:if="${not #lists.isEmpty(teacherList)}" class="table-body">
+                <tr th:each="teacher : ${teacherList}">
+                    <td th:text="${teacher.id}"></td>
+                    <td th:text="${teacher.firstname}"></td>
+                    <td th:text="${teacher.getLastname()}"></td>
+                    <td th:text="${teacher.getUsername()}"></td>
+                    <td th:text="${teacher.getEmail()}"></td>
+                    <td th:text="${teacher.getStartYear()}"></td>
+                    <td th:text="${teacher.getTaughtCourses().size()}"></td>
+                    <td style="text-align: center;">
+                        <button title="Add Teaching Course" th:data-id="${teacher.id}" type="button" disabled>
+                            <i class="fa-solid fa-person-chalkboard"></i>
+                        </button>
+                        <button title="Edit Teacher" th:data-id="${teacher.id}"
+                                onclick="openEditTeacherModal(this.getAttribute('data-id'))" type="button">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                        <button title="Delete Teacher" th:data-id="${teacher.id}"
+                                onclick="openDeleteTeacherModal(this.getAttribute('data-id'))" type="button">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</div>

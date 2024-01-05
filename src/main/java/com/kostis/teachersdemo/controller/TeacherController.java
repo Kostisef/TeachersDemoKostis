@@ -26,6 +26,12 @@ public class TeacherController {
         this.pagesController = pagesController;
     }
 
+    @RequestMapping("/getTeacher")
+    @ResponseBody
+    public User getTeacher(Integer id) {
+        return userRepository.findById(id);
+    }
+
 
     @PostMapping("/addNewTeacher")
     public String addNewTeacher(User teacher, RedirectAttributes redirectAttributes){
@@ -60,18 +66,16 @@ public class TeacherController {
         return MAIN_URL;
     }
 
-    @RequestMapping("/getTeacher")
-    @ResponseBody
-    public User getTeacher(Integer id) {
-        return userRepository.findById(id);
-    }
+
 
     @PostMapping("/saveTeacher")
     public String saveTeacher(User selectedTeacher, RedirectAttributes redirectAttributes) {
-        // Perform validation if needed
+        System.out.println("TeacherId to update: "+ selectedTeacher.getId());
+        String growlMsg = "Teacher updated successfully";
+
         User teacherToUpdate = userRepository.findById(selectedTeacher.getId());
 
-        if (teacherToUpdate !=null){
+        if (teacherToUpdate != null){
             // Convert model to entity!
             teacherToUpdate.setFirstname(selectedTeacher.getFirstname());
             teacherToUpdate.setLastname(selectedTeacher.getLastname());

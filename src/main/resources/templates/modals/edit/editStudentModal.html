@@ -5,7 +5,7 @@
         <span class="close-btn" onclick="closeModal('editStudentModal')">&times;</span>
 
         <form th:action="@{/saveStudent}" method="post">
-            <input type="hidden" id="mdl-student-id" name="id" />
+            <input type="hidden" id="mdl-edit-student-id" name="id" />
 
             <div class="modal-header">
                 <h2>Edit Student</h2>
@@ -13,33 +13,33 @@
             </div>
 
             <div class="form-group">
-                <label for="mdl-student-firstname">First Name:</label>
-                <input type="text" class="form-control" id="mdl-student-firstname" name="firstname" required/>
+                <label for="mdl-edit-student-firstname">First Name:</label>
+                <input type="text" class="form-control" id="mdl-edit-student-firstname" name="firstname" required/>
             </div>
 
             <div class="form-group">
-                <label for="mdl-student-lastname">Last Name:</label>
-                <input type="text" class="form-control" id="mdl-student-lastname" name="lastname" required/>
+                <label for="mdl-edit-student-lastname">Last Name:</label>
+                <input type="text" class="form-control" id="mdl-edit-student-lastname" name="lastname" required/>
             </div>
 
             <div class="form-group">
-                <label for="mdl-student-username">Username:</label>
-                <input type="text" class="form-control" id="mdl-student-username" name="username" required/>
+                <label for="mdl-edit-student-username">Username:</label>
+                <input type="text" class="form-control" id="mdl-edit-student-username" name="username" required/>
             </div>
 
             <div class="form-group">
-                <label for="mdl-student-email">Email:</label>
-                <input type="email" class="form-control" id="mdl-student-email" name="email" required/>
+                <label for="mdl-edit-student-email">Email:</label>
+                <input type="email" class="form-control" id="mdl-edit-student-email" name="email" required/>
             </div>
 
             <div class="form-group">
-                <label for="mdl-student-startYear">Start Year:</label>
-                <input type="number" min="1930" max="2024" step="1" class="form-control" id="mdl-student-startYear" name="startYear"/>
+                <label for="mdl-edit-student-startYear">Start Year:</label>
+                <input type="number" min="1930" max="2024" step="1" class="form-control" id="mdl-edit-student-startYear" name="startYear"/>
             </div>
 
             <div class="form-group">
-                <label for="mdl-student-semester">Semester:</label>
-                <input type="number" min="1" max="40" step="1" class="form-control" id="mdl-student-semester" name="semester"/>
+                <label for="mdl-edit-student-semester">Semester:</label>
+                <input type="number" min="1" max="40" step="1" class="form-control" id="mdl-edit-student-semester" name="semester"/>
             </div>
 
 

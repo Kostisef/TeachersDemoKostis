@@ -1,20 +1,21 @@
-<div th:fragment="deleteTeacherFragment">
+<div th:fragment="deleteCourseFragment">
     <!-- Modal -->
 
     <div class="modal-content">
-        <span class="close-btn" onclick="closeModal('deleteTeacherModal')">&times;</span>
+        <span class="close-btn" onclick="closeModal('deleteCourseModal')">&times;</span>
 
-        <form th:action="@{/deleteTeacher}" method="post">
-            <input type="hidden" id="mdl-delete-teacher-id" name="id" />
+        <form th:action="@{/deleteCourse}" method="post">
+            <input type="hidden" id="mdl-delete-course-id" name="id" />
 
             <div class="modal-header">
-                <h2>Delete Teacher</h2>
+                <h2>Delete Course</h2>
                 <hr class="modal-hr" />
             </div>
 
             <div class="modal-body">
                 <i class="fa-solid fa-exclamation-triangle"></i>
-                <span>You are going to delete that Teacher record. Are you sure?</span>
+
+                <span>You are going to delete that Course record. Are you sure?</span>
             </div>
 
             <div class="modal-footer">
@@ -22,12 +23,11 @@
                     <i class="fa-solid fa-check"></i>
                 </button>
 
-                <button type="button"  onclick="closeModal('deleteTeacherModal')"> Cancel
+                <button type="button" onclick="closeModal('deleteCourseModal')"> Cancel
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
         </form>
-
 
     </div>
 </div>

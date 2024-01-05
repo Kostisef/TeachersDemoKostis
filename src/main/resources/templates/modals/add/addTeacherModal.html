@@ -4,7 +4,7 @@
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal('addTeacherModal')">&times;</span>
         <form th:action="@{/addNewTeacher}" method="post">
-            <input type="hidden" id="mdl-id" name="id" />
+            <input type="hidden" id="mdl-add-teacher-id" name="id" />
 
             <div class="modal-header">
                 <h2>Add Teacher</h2>
@@ -12,33 +12,33 @@
             </div>
 
             <div class="form-group">
-                <label for="mdl-teacher-add-firstname">First Name:</label>
-                <input type="text" class="form-control" id="mdl-teacher-add-firstname" name="firstname" required/>
+                <label for="mdl-add-teacher-firstname">First Name:</label>
+                <input type="text" class="form-control" id="mdl-add-teacher-firstname" name="firstname" required/>
             </div>
 
             <div class="form-group">
-                <label for="mdl-teacher-add-lastname">Last Name:</label>
-                <input type="text" class="form-control" id="mdl-teacher-add-lastname" name="lastname" required/>
+                <label for="mdl-add-teacher-lastname">Last Name:</label>
+                <input type="text" class="form-control" id="mdl-add-teacher-lastname" name="lastname" required/>
             </div>
 
             <div class="form-group">
-                <label for="mdl-teacher-add-username">Username:</label>
-                <input type="text" class="form-control" id="mdl-teacher-add-username" name="username" required/>
+                <label for="mdl-add-teacher-username">Username:</label>
+                <input type="text" class="form-control" id="mdl-add-teacher-username" name="username" required/>
             </div>
 
             <div class="form-group">
-                <label for="mdl-teacher-add-email">Email:</label>
-                <input type="email" class="form-control" id="mdl-teacher-add-email" name="email" required/>
+                <label for="mdl-add-teacher-email">Email:</label>
+                <input type="email" class="form-control" id="mdl-add-teacher-email" name="email" required/>
             </div>
 
             <div class="form-group">
-                <label for="mdl-teacher-add-password">Password:</label>
-                <input type="password" class="form-control" id="mdl-teacher-add-password" name="password" required/>
+                <label for="mdl-add-teacher-password">Password:</label>
+                <input type="password" class="form-control" id="mdl-add-teacher-password" name="password" required/>
             </div>
 
             <div class="form-group">
-                <label for="mdl-teacher-add-startYear">Start Year:</label>
-                <input type="number" min="1930" max="2024" step="1" class="form-control" id="mdl-teacher-add-startYear" name="startYear"/>
+                <label for="mdl-add-teacher-startYear">Start Year:</label>
+                <input type="number" min="1930" max="2024" step="1" class="form-control" id="mdl-add-teacher-startYear" name="startYear"/>
             </div>
 
 

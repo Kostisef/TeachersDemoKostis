@@ -1,0 +1,62 @@
+<div th:fragment="courseTableFragment">
+
+    <!--Courses-->
+    <div class="container">
+        <div class="table-header">
+
+            <h3 th:text="'Courses List (Total records: ' + ${courseList.size()} + ')'"></h3>
+            <button title="Add new Course" type="button"
+                    onclick="openModal('addCourseModal')"> Add Course
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+        <div class="tableFixHead">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Semester</th>
+                    <th>Professor</th>
+                    <th>Num. of Students</th>
+                    <th style="width: 10%;">Action</th>
+                </tr>
+                </thead>
+                <tbody th:if="${#lists.isEmpty(courseList)}" class="table-body">
+                <tr>
+                    <td colspan="9">No records found</td>
+                </tr>
+                </tbody>
+                <tbody th:if="${not #lists.isEmpty(courseList)}">
+                <tr th:each="course : ${courseList}">
+                    <td th:text="${course.id}"></td>
+                    <td th:text="${course.name}"></td>
+                    <td th:text="${course.description}"></td>
+                    <td th:text="${course.semester}"></td>
+
+
+                    <td th:if="${course.teacher !=null }" th:text="${course.teacher.lastname + ' ' + course.teacher.firstname}"></td>
+                    <td th:if="${course.teacher == null}">-</td>
+
+
+                    <td th:text="${course.studentAssociations.size()}"></td>
+                    <td style="text-align: center;">
+                        <button title="Edit Course" th:data-id="${course.id}" type="button"
+                                onclick="openEditCourseModal(this.getAttribute('data-id'))">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+
+                        <button title="Delete Course" th:data-id="${course.id}" type="button"
+                                onclick="openDeleteCourseModal(this.getAttribute('data-id'))">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

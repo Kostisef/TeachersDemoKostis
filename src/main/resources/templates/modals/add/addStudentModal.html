@@ -1,0 +1,55 @@
+<div th:fragment="addStudentFragment">
+    <!-- Modal -->
+
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('addStudentModal')">&times;</span>
+        <form th:action="@{/addNewStudent}" method="post">
+            <input type="hidden" id="mdl-add-student-id" name="id" />
+
+            <div class="modal-header">
+                <h2>Add Student</h2>
+                <hr class="modal-hr" />
+            </div>
+
+            <div class="form-group">
+                <label for="mdl-add-student-firstname">First Name:</label>
+                <input type="text" class="form-control" id="mdl-add-student-firstname" name="firstname" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="mdl-add-student-lastname">Last Name:</label>
+                <input type="text" class="form-control" id="mdl-add-student-lastname" name="lastname" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="mdl-add-student-username">Username:</label>
+                <input type="text" class="form-control" id="mdl-add-student-username" name="username" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="mdl-add-student-email">Email:</label>
+                <input type="email" class="form-control" id="mdl-add-student-email" name="email" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="mdl-add-student-password">Password:</label>
+                <input type="password" class="form-control" id="mdl-add-student-password" name="password" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="mdl-add-student-startYear">Start Year:</label>
+                <input type="number" min="1930" max="2024" step="1" class="form-control" id="mdl-add-student-startYear" name="startYear"/>
+            </div>
+
+            <div class="form-group">
+                <label for="mdl-add-student-semester">Semester:</label>
+                <input type="number" min="1" max="100" step="1" class="form-control" id="mdl-add-student-semester" name="semester"/>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Create Student</button>
+        </form>
+    </div>
+
+</div>
+

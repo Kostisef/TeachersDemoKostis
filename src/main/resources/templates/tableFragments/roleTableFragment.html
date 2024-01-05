@@ -1,0 +1,46 @@
+<div th:fragment="roleTableFragment">
+
+    <!--Roles-->
+    <div class="container">
+        <div class="table-header">
+
+            <h3 th:text="'Roles List (Total records: ' + ${roleList.size()} + ')'"></h3>
+            <button title="Add new Role" type="button"
+                    onclick="openModal('addRoleModal')"> Add Role
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+        <div class="tableFixHead">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody th:if="${#lists.isEmpty(roleList)}" class="table-body">
+                <tr>
+                    <td colspan="9">No records found</td>
+                </tr>
+                </tbody>
+                <tbody th:if="${not #lists.isEmpty(roleList)}">
+                <tr th:each="role : ${roleList}">
+                    <td th:text="${role.id}"></td>
+                    <td th:text="${role.name}"></td>
+                    <td th:text="${role.description}"></td>
+                    <td style="text-align: center;">
+                        <button title="Edit Role" th:data-id="${role.id}" type="button"
+                                onclick="openEditRoleModal(this.getAttribute('data-id'))">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>

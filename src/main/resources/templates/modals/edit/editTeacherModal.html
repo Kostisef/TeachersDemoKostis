@@ -5,36 +5,41 @@
         <span class="close-btn" onclick="closeModal('editTeacherModal')">&times;</span>
         
         <form th:action="@{/saveTeacher}" method="post">
-            <input type="hidden" id="mdl-id" name="id" />
+            <input type="hidden" id="mdl-edit-teacher-id" name="id" />
 
             <div class="modal-header">
                 <h2>Edit Teacher</h2>
                 <hr class="modal-hr" />
             </div>
 
+<!--            <div class="form-group">-->
+<!--                <label for="mdl-edit-teacher-id2">ID:</label>-->
+<!--                <input type="text" class="form-control" id="mdl-edit-teacher-id2" name="id" disabled/>-->
+<!--            </div>-->
+
             <div class="form-group">
-                <label for="mdl-firstname">First Name:</label>
-                <input type="text" class="form-control" id="mdl-firstname" name="firstname" required/>
+                <label for="mdl-edit-teacher-firstname">First Name:</label>
+                <input type="text" class="form-control" id="mdl-edit-teacher-firstname" name="firstname" required/>
             </div>
 
             <div class="form-group">
-                <label for="mdl-lastname">Last Name:</label>
-                <input type="text" class="form-control" id="mdl-lastname" name="lastname" required/>
+                <label for="mdl-edit-teacher-lastname">Last Name:</label>
+                <input type="text" class="form-control" id="mdl-edit-teacher-lastname" name="lastname" required/>
             </div>
 
             <div class="form-group">
-                <label for="mdl-username">Username:</label>
-                <input type="text" class="form-control" id="mdl-username" name="username" required/>
+                <label for="mdl-edit-teacher-username">Username:</label>
+                <input type="text" class="form-control" id="mdl-edit-teacher-username" name="username" required/>
             </div>
 
             <div class="form-group">
-                <label for="mdl-email">Email:</label>
-                <input type="email" class="form-control" id="mdl-email" name="email" required/>
+                <label for="mdl-edit-teacher-email">Email:</label>
+                <input type="email" class="form-control" id="mdl-edit-teacher-email" name="email" required/>
             </div>
 
             <div class="form-group">
-                <label for="mdl-startYear">Start Year:</label>
-                <input type="number" min="1930" max="2024" step="1" class="form-control" id="mdl-startYear" name="startYear"/>
+                <label for="mdl-edit-teacher-startYear">Start Year:</label>
+                <input type="number" min="1930" max="2024" step="1" class="form-control" id="mdl-edit-teacher-startYear" name="startYear"/>
             </div>
 
 

@@ -1,0 +1,30 @@
+<div th:fragment="editRoleFragment">
+    <!-- Modal -->
+
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('editRoleModal')">&times;</span>
+
+        <form th:action="@{/saveRole}" method="post">
+            <input type="hidden" id="mdl-edit-role-id" name="id" />
+
+            <div class="modal-header">
+                <h2>Edit Role</h2>
+                <hr class="modal-hr" />
+            </div>
+
+            <div class="form-group">
+                <label for="mdl-edit-role-name">Role Name:</label>
+                <input type="text" class="form-control" id="mdl-edit-role-name" name="name" disabled/>
+            </div>
+
+            <div class="form-group">
+                <label for="mdl-edit-role-description">Role Description:</label>
+                <input type="text" class="form-control" id="mdl-edit-role-description" name="description"/>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
+
+</div>
+
