@@ -1,7 +1,7 @@
 package com.kostis.teachersdemo.controller;
 
 import com.kostis.teachersdemo.entities.User;
-import com.kostis.teachersdemo.repo.UserRepository;
+import com.kostis.teachersdemo.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -11,17 +11,30 @@ public class StudentController {
 
     private static final String MAIN_URL = "redirect:/dashboard";
 
-    private final UserRepository userRepository;
+    private final UserServiceImpl userService;
 
-    public StudentController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public StudentController(UserServiceImpl userService) {
+        this.userService = userService;
+    }
+
+    @RequestMapping("/getStudent")
+    @ResponseBody
+    public User getStudent(Integer id) {
+        return userService.getUserById(id);
     }
 
 
     @PostMapping("/addNewStudent")
-    public String addNewStudent(User student){
-        userRepository.save(student);
+    public String addNewStudent(User student, RedirectAttributes redirectAttributes){
+        String growlMsg = "Student created successfully";
+        try{
+            userService.createNewUser(student, 2);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            growlMsg = "Failed to create student...";
+        }
 
+        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         return MAIN_URL;
     }
 
@@ -31,8 +44,7 @@ public class StudentController {
         String growlMsg = "Student deleted successfully";
 
         try{
-            User studentToDelete = getStudent(studentIncoming.getId());
-            userRepository.delete(studentToDelete);
+            userService.deleteStudent(studentIncoming);
         } catch (Exception e){
             growlMsg = "Failed to delete student...";
         }
@@ -40,31 +52,23 @@ public class StudentController {
         redirectAttributes.addFlashAttribute("successMessage", growlMsg);
 
         return MAIN_URL;
+
     }
 
-    @RequestMapping("/getStudent")
-    @ResponseBody
-    public User getStudent(Integer id) {
-        return userRepository.findById(id);
-    }
 
     @PostMapping("/saveStudent")
-    public String saveStudent(User selectedStudent) {
+    public String saveStudent(User selectedStudent, RedirectAttributes redirectAttributes) {
+        System.out.println("StudentId to update: "+ selectedStudent.getId());
+        String growlMsg = "Student updated successfully";
 
-        User studentToUpdate = userRepository.findById(selectedStudent.getId());
-
-        if (studentToUpdate !=null){
-            // Convert model to entity!
-            studentToUpdate.setFirstname(selectedStudent.getFirstname());
-            studentToUpdate.setLastname(selectedStudent.getLastname());
-            studentToUpdate.setUsername(selectedStudent.getUsername());
-            studentToUpdate.setEmail(selectedStudent.getEmail());
-            studentToUpdate.setStartYear(selectedStudent.getStartYear());
-            studentToUpdate.setSemester(selectedStudent.getSemester());
-
-            // Save the edited student to the database
-            userRepository.save(studentToUpdate);
+        try{
+            userService.saveUser(selectedStudent, 2);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            growlMsg = "Failed to update Student...";
         }
+
+        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
 
         return MAIN_URL;
     }

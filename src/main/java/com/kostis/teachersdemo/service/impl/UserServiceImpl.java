@@ -4,6 +4,7 @@ import com.kostis.teachersdemo.entities.Course;
 import com.kostis.teachersdemo.entities.User;
 import com.kostis.teachersdemo.repo.CourseRepository;
 import com.kostis.teachersdemo.repo.RoleRepository;
+import com.kostis.teachersdemo.repo.StudentCourseAssociationRepository;
 import com.kostis.teachersdemo.repo.UserRepository;
 import com.kostis.teachersdemo.service.IUserService;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,13 @@ public class UserServiceImpl implements IUserService {
     private final RoleRepository roleRepository;
 
     private final CourseRepository courseRepository;
+    private final StudentCourseAssociationRepository studentCourseAssociationRepository;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, CourseRepository courseRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, CourseRepository courseRepository, StudentCourseAssociationRepository studentCourseAssociationRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.courseRepository = courseRepository;
+        this.studentCourseAssociationRepository = studentCourseAssociationRepository;
     }
 
 
@@ -52,15 +55,11 @@ public class UserServiceImpl implements IUserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    /**
-     * Find User By Email
-     *
-     * @param email
-     */
     @Override
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User getUserById(Integer id) {
+        return userRepository.findById(id);
     }
+
 
     /**
      * Save User
@@ -68,38 +67,58 @@ public class UserServiceImpl implements IUserService {
      * @param user
      */
     @Override
-    public void saveUser(User user) {
-        userRepository.save(user);
-    }
+    public void saveUser(User user, Integer roleId) throws Exception {
+        User userToUpdate = userRepository.findById(user.getId());
 
-    /**
-     * Delete User
-     *
-     * @param id
-     */
-    @Override
-    public void deleteUser(Long id) {
+        if (userToUpdate != null){
+            userToUpdate.setFirstname(user.getFirstname());
+            userToUpdate.setLastname(user.getLastname());
+            userToUpdate.setUsername(user.getUsername());
+            userToUpdate.setEmail(user.getEmail());
+            userToUpdate.setStartYear(user.getStartYear());
 
-        userRepository.deleteById(id);
+            if (roleId.equals(2)){
+                userToUpdate.setSemester(user.getSemester());
+            }
+
+            userRepository.save(userToUpdate);
+        } else {
+            throw new Exception("Null incoming user to update.");
+        }
     }
 
 
     public void deleteTeacher(User teacher){
-        for (Course course : teacher.getTaughtCourses()){
+        User teacherToDelete = getUserById(teacher.getId());
+        for (Course course : teacherToDelete.getTaughtCourses()){
             course.setTeacher(null);
         }
-        courseRepository.saveAllAndFlush(teacher.getTaughtCourses());
-        userRepository.delete(teacher);
+        courseRepository.saveAllAndFlush(teacherToDelete.getTaughtCourses());
+        userRepository.delete(teacherToDelete);
+    }
+
+    public void deleteStudent(User student){
+        User studentToDelete = getUserById(student.getId());
+
+        if (!studentToDelete.getEnrolledCourses().isEmpty()){
+            studentCourseAssociationRepository.deleteAll(studentToDelete.getEnrolledCourses());
+            studentCourseAssociationRepository.flush();
+        }
+
+        userRepository.delete(studentToDelete);
     }
 
     @Override
-    public void createNewTeacher(User teacher) {
-        teacher.setSemester(null);
-        teacher.setTaughtCourses(Collections.emptyList());
-        teacher.setEnrolledCourses(Collections.emptyList());
-        teacher.setRole(roleRepository.findById(1)); // 1: Teacher
+    public void createNewUser(User user, Integer roleId) {
+        user.setId(null);
+        user.setTaughtCourses(Collections.emptyList());
+        user.setEnrolledCourses(Collections.emptyList());
+        user.setRole(roleRepository.findById(roleId)); // 1: Teacher, 2: Student
 
+        if (roleId.equals(1)){
+            user.setSemester(null);
+        }
 
-        userRepository.save(teacher);
+        userRepository.save(user);
     }
 }

@@ -1,6 +1,7 @@
 package com.kostis.teachersdemo.service;
 
 import com.kostis.teachersdemo.entities.Course;
+import com.kostis.teachersdemo.entities.User;
 
 import java.util.List;
 
@@ -10,7 +11,11 @@ public interface ICourseService {
 
     Course getCourseById(Long id);
 
-    void saveCourse(Course course);
+    Course getCourseById(Integer id);
 
-    void deleteCourse(Long id);
+    void saveCourse(Course course) throws Exception;
+
+    void deleteCourse(Course course) throws Exception;
+
+    void createNewCourse(Course course);
 }

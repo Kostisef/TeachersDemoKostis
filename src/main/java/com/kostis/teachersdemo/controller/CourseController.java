@@ -2,65 +2,76 @@ package com.kostis.teachersdemo.controller;
 
 import com.kostis.teachersdemo.entities.Course;
 import com.kostis.teachersdemo.repo.CourseRepository;
+import com.kostis.teachersdemo.service.impl.CourseServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class CourseController {
 
     private static final String MAIN_URL = "redirect:/dashboard";
 
-    private final CourseRepository courseRepository;
+    private final CourseServiceImpl courseService;
 
-    public CourseController(CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
-    }
-
-
-    @PostMapping("/addNewCourse")
-    public String addNewCourse(Course course){
-        courseRepository.save(course);
-
-        return MAIN_URL;
-    }
-
-    @PostMapping("/deleteCourse")
-    public String deleteCourse(@RequestParam Integer courseId){
-        System.out.println("CourseId to delete: "+ courseId);
-
-        Course courseToDelete = getCourse(courseId);
-        courseRepository.delete(courseToDelete);
-
-        return MAIN_URL;
+    public CourseController(CourseServiceImpl courseService) {
+        this.courseService = courseService;
     }
 
     @RequestMapping("/getCourse")
     @ResponseBody
     public Course getCourse(Integer id) {
-        return courseRepository.findById(id);
+        return courseService.getCourseById(id);
     }
 
-    @PostMapping("/saveCourse")
-    public String saveCourse(Course selectedCourse) {
 
-        Course courseToUpdate = courseRepository.findById(selectedCourse.getId());
-
-        if (courseToUpdate !=null){
-            // Convert model to entity!
-//            courseToUpdate.setFirstname(selectedCourse.getFirstname());
-//            courseToUpdate.setLastname(selectedCourse.getLastname());
-//            courseToUpdate.setUsername(selectedCourse.getUsername());
-//            courseToUpdate.setEmail(selectedCourse.getEmail());
-//            courseToUpdate.setStartYear(selectedCourse.getStartYear());
-//            courseToUpdate.setSemester(selectedCourse.getSemester());
-
-            // Save the edited student to the database
-            courseRepository.save(courseToUpdate);
+    @PostMapping("/addNewCourse")
+    public String addNewCourse(Course course, RedirectAttributes redirectAttributes){
+        String growlMsg = "Course created successfully";
+        try{
+            courseService.createNewCourse(course);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            growlMsg = "Failed to create course...";
         }
 
+        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
+
+        return MAIN_URL;
+    }
+
+    @PostMapping("/deleteCourse")
+    public String deleteCourse(Course courseIncoming, RedirectAttributes redirectAttributes){
+        System.out.println("CourseId to delete: "+ courseIncoming.getId());
+
+        String growlMsg = "Course deleted successfully";
+        try{
+            courseService.deleteCourse(courseIncoming);
+        } catch (Exception e){
+            growlMsg = "Failed to delete course...";
+        }
+
+        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
+
+        return MAIN_URL;
+    }
+
+
+    @PostMapping("/saveCourse")
+    public String saveCourse(Course selectedCourse, RedirectAttributes redirectAttributes) {
+        System.out.println("CourseId to update: "+ selectedCourse.getId());
+        String growlMsg = "Course updated successfully";
+        try{
+            courseService.saveCourse(selectedCourse);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            growlMsg = "Failed to update course...";
+        }
+
+        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         return MAIN_URL;
     }
 }

@@ -1,6 +1,7 @@
 package com.kostis.teachersdemo.service.impl;
 
 import com.kostis.teachersdemo.entities.Course;
+import com.kostis.teachersdemo.entities.User;
 import com.kostis.teachersdemo.repo.CourseRepository;
 import com.kostis.teachersdemo.service.ICourseService;
 import org.springframework.stereotype.Service;
@@ -27,12 +28,39 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public void saveCourse(Course course) {
-        courseRepository.save(course);
+    public Course getCourseById(Integer id) {
+        return courseRepository.findById(id);
     }
 
     @Override
-    public void deleteCourse(Long id) {
-        courseRepository.deleteById(id);
+    public void saveCourse(Course course) throws Exception {
+        Course courseToUpdate = courseRepository.findById(course.getId());
+
+        if (courseToUpdate!=null){
+            courseToUpdate.setName(course.getName());
+            courseToUpdate.setDescription(course.getDescription());
+            courseToUpdate.setSemester(course.getSemester());
+
+            courseRepository.save(courseToUpdate);
+        } else {
+            throw new Exception("Null incoming course to update.");
+        }
+    }
+
+    @Override
+    public void deleteCourse(Course course) throws Exception {
+        Course courseToDelete = getCourseById(course.getId());
+
+        if (courseToDelete !=null){
+            courseRepository.delete(courseToDelete);
+        } else {
+            throw new Exception("Null incoming course to delete.");
+        }
+    }
+
+    @Override
+    public void createNewCourse(Course course){
+        course.setId(null);
+        courseRepository.save(course);
     }
 }

@@ -11,6 +11,8 @@ public interface IRoleService {
 
     Role getRoleById(Long id);
 
-    void saveRole(Role role);
+    Role getRoleById(Integer id);
+
+    void saveRole(Role role) throws Exception;
 
 }

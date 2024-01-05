@@ -21,21 +21,11 @@ public interface IUserService {
      */
     User getUserById(Long id);
 
-    /**
-     * Find User By Email
-     */
-    User getUserByEmail(String email);
+    User getUserById(Integer id);
 
-    /**
-     * Save User
-     */
-    void saveUser(User user);
 
-    /**
-     * Delete User
-     */
+    void saveUser(User user, Integer roleId) throws Exception;
 
-    void deleteUser(Long id);
 
-    void createNewTeacher(User teacher);
+    void createNewUser(User user, Integer roleId);
 }
