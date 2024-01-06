@@ -1,6 +1,8 @@
 package com.kostis.teachersdemo.entities;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,11 +23,13 @@ public class StudentCourseAssociation implements Serializable {
     @Column(name = "ID", nullable = false)
     private Integer id;
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "STUDENT_ID", referencedColumnName = "ID", nullable = false)
     private User student;
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "COURSE_ID", referencedColumnName = "ID", nullable = false)
     private Course course;
 

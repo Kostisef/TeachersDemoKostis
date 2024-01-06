@@ -1,0 +1,58 @@
+<div th:fragment="addEnrolledCourseFragment">
+    <!-- Modal -->
+
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('addEnrolledCourseModal')">&times;</span>
+
+        <div id="noCoursesAvailableSection">
+            <div class="modal-header">
+                <h2>No Enrolled Courses Available</h2>
+                <hr class="modal-hr" />
+            </div>
+            <p>No courses are available to add. Please check back later.</p>
+        </div>
+
+        <div id="addEnrolledCourseSection" style="display: none;">
+            <form th:action="@{/addEnrolledCourse}" method="post">
+                <input type="hidden" id="mdl-addEnrolledCourse-student-id" name="selectedStudent.id" th:value="${selectedStudent != null ? selectedStudent.id : null}" />
+                <input type="hidden" id="mdl-addEnrolledCourse-selected-course-id" name="selectedCourse.id" />
+
+                <div class="modal-header">
+                    <h2>Add Enrolled Course</h2>
+                    <hr class="modal-hr" />
+                </div>
+
+                <div class="form-group">
+                    <label for="mdl-addEnrolledCourse-course-id">Select Course:</label>
+                    <select id="mdl-addEnrolledCourse-course-id" name="courseId" class="form-control" onchange="updateEnrolledCourseDetails()">
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="mdl-addEnrolledCourse-course-name">Course Name:</label>
+                    <input type="text" class="form-control" id="mdl-addEnrolledCourse-course-name" name="name" disabled/>
+                </div>
+
+                <div class="form-group">
+                    <label for="mdl-addEnrolledCourse-course-description">Course Description:</label>
+                    <input type="text" class="form-control" id="mdl-addEnrolledCourse-course-description" name="description" disabled/>
+                </div>
+
+                <div class="form-group">
+                    <label for="mdl-addEnrolledCourse-course-semester">Course Semester:</label>
+                    <input type="text" class="form-control" id="mdl-addEnrolledCourse-course-semester" name="semester" disabled/>
+                </div>
+
+                <div class="form-group">
+                    <label for="mdl-addEnrolledCourse-course-teacher">Course Teacher:</label>
+                    <input type="text" class="form-control" id="mdl-addEnrolledCourse-course-teacher" name="teacher" disabled/>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Enrolled Course</button>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+

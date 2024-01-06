@@ -25,7 +25,7 @@
         <div th:replace="modals/add/addTeachingCourseModal :: addTeachingCourseFragment"></div>
     </div>
 
-    <!-- Delete Teaching Course - Modal -->
+    <!-- Remove Teaching Course - Modal -->
     <div id="deleteTeachingCourseModal" class="modal">
         <div th:replace="modals/delete/deleteTeachingCourseModal :: deleteTeachingCourseFragment"></div>
     </div>
@@ -44,6 +44,21 @@
     <!-- Delete Student Record - Modal -->
     <div id="deleteStudentModal" class="modal">
         <div th:replace="modals/delete/deleteStudentModal :: deleteStudentFragment"></div>
+    </div>
+
+    <!-- Show Enrolled Courses - Modal -->
+    <div id="showEnrolledCoursesModal" class="modal">
+        <div th:replace="modals/other/showEnrolledCoursesModal :: showEnrolledCoursesFragment"></div>
+    </div>
+
+    <!-- Add Enrolled Course - Modal -->
+    <div id="addEnrolledCourseModal" class="modal">
+        <div th:replace="modals/add/addEnrolledCourseModal :: addEnrolledCourseFragment"></div>
+    </div>
+
+    <!-- Remove Enrolled Course - Modal -->
+    <div id="deleteEnrolledCourseModal" class="modal">
+        <div th:replace="modals/delete/deleteEnrolledCourseModal :: deleteEnrolledCourseFragment"></div>
     </div>
 
 

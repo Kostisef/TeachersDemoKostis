@@ -24,4 +24,8 @@ public interface ICourseService {
     List<Course> getAllCoursesWithoutTeacher();
 
     void addTeacherToCourse(Integer selectedTeacherId, Integer selectedCourseId) throws Exception;
+
+    void removeCourseFromStudent(Integer selectedStudentId, Integer selectedCourseId) throws Exception;
+
+    void addCourseToStudent(Integer selectedStudentId, Integer selectedCourseId) throws Exception;
 }

@@ -1,0 +1,49 @@
+<div th:fragment="showEnrolledCoursesFragment">
+    <!-- Modal -->
+
+    <div class="modal-content" style="width: 75%!important;">
+        <span class="close-btn" onclick="closeModal('showEnrolledCoursesModal')">&times;</span>
+
+        <form >
+            <input type="hidden" id="mdl-showEnrolledCourses-student-id" name="id" />
+
+            <div class="modal-header">
+                <h2 id="student-info">Enrolled Courses</h2>
+                <hr class="modal-hr" />
+            </div>
+
+            <!--Enrolled Courses-->
+            <div class="container">
+                <div class="table-header student">
+                    <h3 id="table-records-showEnrolledRecords-info"></h3>
+
+                    <button title="Enroll Course" type="button" onclick="openAddEnrollCourseModal()"> Enroll Course
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+
+                <div class="tableFixHead">
+                    <table id="enrolledCoursesTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Semester</th>
+                                <th>Teacher</th>
+                                <th style="width: 10%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="enrolledCoursesTableBody" class="table-body">
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+

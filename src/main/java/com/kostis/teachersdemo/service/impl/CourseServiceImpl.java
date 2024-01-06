@@ -1,10 +1,13 @@
 package com.kostis.teachersdemo.service.impl;
 
 import com.kostis.teachersdemo.entities.Course;
+import com.kostis.teachersdemo.entities.StudentCourseAssociation;
 import com.kostis.teachersdemo.entities.User;
 import com.kostis.teachersdemo.repo.CourseRepository;
+import com.kostis.teachersdemo.repo.StudentCourseAssociationRepository;
 import com.kostis.teachersdemo.repo.UserRepository;
 import com.kostis.teachersdemo.service.ICourseService;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,9 +19,12 @@ public class CourseServiceImpl implements ICourseService {
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
 
-    public CourseServiceImpl(CourseRepository courseRepository, UserRepository userRepository) {
+    private final StudentCourseAssociationRepository studentCourseAssociationRepository;
+
+    public CourseServiceImpl(CourseRepository courseRepository, UserRepository userRepository, StudentCourseAssociationRepository studentCourseAssociationRepository) {
         this.courseRepository = courseRepository;
         this.userRepository = userRepository;
+        this.studentCourseAssociationRepository = studentCourseAssociationRepository;
     }
 
     @Override
@@ -96,6 +102,41 @@ public class CourseServiceImpl implements ICourseService {
         } else {
             throw new Exception("Error at addTeacherToCourse(). User is not a teacher or course has already a teacher");
         }
+    }
+
+    @Override
+    public void removeCourseFromStudent(Integer selectedStudentId, Integer selectedCourseId) throws Exception {
+        Course course = getCourseById(selectedCourseId);
+        User student = userRepository.findById(selectedStudentId);
+
+        if (course!=null && student!=null){
+            StudentCourseAssociation association = studentCourseAssociationRepository.findByStudent_IdAndCourse_Id(student.getId(), course.getId());
+            if (association!=null && student.getRole().getId().equals(2)){
+                studentCourseAssociationRepository.delete(association);
+            } else {
+                throw new Exception("Error at removeCourseFromStudent(). Cannot find student-course association or user is not a student.");
+            }
+        } else {
+            throw new Exception("Error at removeCourseFromStudent(). Cannot find course or student record at db.");
+        }
+    }
+
+    @Override
+    public void addCourseToStudent(Integer selectedStudentId, Integer selectedCourseId) throws Exception {
+        Course course = getCourseById(selectedCourseId);
+        User student = userRepository.findById(selectedStudentId);
+
+        if (course!=null && student!=null){
+            StudentCourseAssociation association = new StudentCourseAssociation();
+            association.setCourse(course);
+            association.setStudent(student);
+
+            studentCourseAssociationRepository.saveAndFlush(association);
+        } else {
+            throw new Exception("Error at addCourseToStudent(). Cannot find course or student record at db.");
+        }
+
+
     }
 
     @Override

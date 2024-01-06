@@ -1,6 +1,7 @@
 package com.kostis.teachersdemo.controller;
 
 import com.kostis.teachersdemo.entities.Course;
+import com.kostis.teachersdemo.models.CourseModel;
 import com.kostis.teachersdemo.repo.CourseRepository;
 import com.kostis.teachersdemo.service.impl.CourseServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,25 @@ public class CourseController {
     @ResponseBody
     public Course getCourse(Integer id) {
         return courseService.getCourseById(id);
+    }
+
+    @RequestMapping("/getCourseModel")
+    @ResponseBody
+    public CourseModel getCourseModel(Integer id) {
+        Course course = courseService.getCourseById(id);
+        CourseModel model = new CourseModel();
+
+        model.setId(course.getId());
+        model.setName(course.getName());
+        model.setDescription(course.getDescription());
+        model.setSemester(course.getSemester());
+        String teacherFullName = "-";
+        if (course.getTeacher() != null){
+            teacherFullName = course.getTeacher().getLastname() + " " + course.getTeacher().getFirstname();
+        }
+        model.setTeacherFullName(teacherFullName);
+
+        return model;
     }
 
 

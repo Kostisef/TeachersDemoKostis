@@ -39,7 +39,7 @@ function openDeleteTeacherModal(teacherId){
     });
 }
 
-// MODAL: EDIT TEACHER
+// MODAL: SHOW TEACHING COURSES
 function openShowTeachingCoursesModal(teacherId){
 
     $.ajax({
@@ -230,6 +230,118 @@ function openAddTeachingCourseModal(){
 }
 
 
+// MODAL: ADD COURSE TO STUDENT
+function openAddEnrollCourseModal(){
+    const studentId = $('#mdl-showEnrolledCourses-student-id').prop('value');
+    console.log("Student ID: " + studentId);
+    $.ajax({
+        url: '/teachersDemoKostis/getStudentModel?id='+studentId,
+        type: 'GET',
+        dataType: 'json',
+        success: function(student) {
+            $('#mdl-addEnrolledCourse-student-id').val(student.id);
+
+
+            var dropdown = $('#mdl-addEnrolledCourse-course-id');
+            dropdown.empty();
+
+            if (student.notAttendingCourseModelList.length === 0){
+                $('#noCoursesAvailableSection').show();
+                $('#addEnrolledCourseSection').hide();
+            } else {
+                $('#noCoursesAvailableSection').hide();
+                $('#addEnrolledCourseSection').show();
+
+                dropdown.append($('<option>').val('').text('Select a Course').prop('disabled', true).prop('selected', true));
+
+                $.each(student.notAttendingCourseModelList, function(index, course) {
+                    dropdown.append($('<option>').val(course.id).text(course.name));
+                });
+            }
+
+            openModal('addEnrolledCourseModal');
+        },
+        error: function() {
+            console.error('Error fetching course information.');
+        }
+    });
+}
+
+
+// MODAL: REMOVE ENROLLED COURSE FROM STUDENT
+function openDeleteEnrolledCourseModal(studentId, courseId){
+    $.ajax({
+        url: '/teachersDemoKostis/getStudentModel?id='+studentId,
+        type: 'GET',
+        dataType: 'json',
+        success: function(student) {
+
+            $('#mdl-deleteEnrolledCourse-student-id').val(student.id);
+            $('#mdl-deleteEnrolledCourse-course-id').val(courseId);
+
+            openModal('deleteEnrolledCourseModal');
+        },
+        error: function () {
+            console.error('Error fetching Student information.');
+        }
+    });
+}
+
+
+// MODAL: SHOW ENROLLED COURSES
+function openEnrolledCoursesModal(studentId){
+
+    $.ajax({
+        url: '/teachersDemoKostis/getStudentModel?id='+studentId,
+        type: 'GET',
+        dataType: 'json',
+        success: function(studentModel) {
+            // console.log("STUDENT MODEL BELOW");
+            // console.log(studentModel);
+            $('#mdl-showEnrolledCourses-student-id').val(studentModel.id);
+            // const fullName = student.lastname + " " + student.firstname;
+            $('#mdl-showEnrolledCourses-student-fullName').text(studentModel.fullName);
+
+
+            const enrolledCourses = studentModel.courseModelList;
+            // console.log(enrolledCourses);
+            const myTableBody = $('#enrolledCoursesTableBody');
+            myTableBody.empty();
+
+            for (let i = 0; i < enrolledCourses.length; i++) {
+                const courseModel = enrolledCourses[i];
+
+                const row = '<tr>' +
+                    '<td>' + courseModel.id + '</td>' +
+                    '<td>' + courseModel.name + '</td>' +
+                    '<td>' + courseModel.description + '</td>' +
+                    '<td>' + courseModel.semester + '</td>' +
+                    '<td>' + courseModel.teacherFullName + '</td>' +
+                    '<td style="text-align: center;">' +
+                    '<button title="Remove Enrolled Course" data-id="' + courseModel.id + '" type="button" ' +
+                    'onclick="openDeleteEnrolledCourseModal(' + studentModel.id + ', ' + courseModel.id + ')">' +
+                    '<i class="fa-solid fa-xmark"></i>' +
+                    '</button>' +
+                    '</td>' +
+                    '</tr>';
+                myTableBody.append(row);
+            }
+
+            if (enrolledCourses.length === 0) {
+                myTableBody.append('<tr><td colspan="6">No records found</td></tr>');
+            }
+
+            $('#student-info').text("Enrolled Courses (Student: "+ studentModel.lastname + " " + studentModel.firstname + ")");
+            $('#table-records-showEnrolledRecords-info').text('Enrolled Courses List (Total records: ' + enrolledCourses.length + ')');
+
+            openModal('showEnrolledCoursesModal');
+        },
+        error: function() {
+            console.error('Error fetching student information.');
+        }
+    });
+}
+
 
 function triggerGrowlModal(msg){
     console.log("triggerGrowlModal() called with msg: "+ msg);
@@ -274,6 +386,28 @@ function updateTeachingCourseDetails() {
             $('#mdl-addTeachingCourse-course-name').val(course.name);
             $('#mdl-addTeachingCourse-course-description').val(course.description);
             $('#mdl-addTeachingCourse-course-semester').val(course.semester);
+        },
+        error: function() {
+            console.error('Error fetching course information.');
+        }
+    });
+
+}
+
+function updateEnrolledCourseDetails() {
+    const courseId = document.getElementById("mdl-addEnrolledCourse-course-id").value;
+
+    $.ajax({
+        url: '/teachersDemoKostis/getCourseModel?id='+courseId,
+        type: 'GET',
+        dataType: 'json',
+        success: function(course) {
+            console.log(course);
+            $('#mdl-addEnrolledCourse-selected-course-id').val(course.id);
+            $('#mdl-addEnrolledCourse-course-name').val(course.name);
+            $('#mdl-addEnrolledCourse-course-description').val(course.description);
+            $('#mdl-addEnrolledCourse-course-semester').val(course.semester);
+            $('#mdl-addEnrolledCourse-course-teacher').val(course.teacherFullName);
         },
         error: function() {
             console.error('Error fetching course information.');

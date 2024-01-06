@@ -55,12 +55,12 @@ public class User implements Serializable {
 
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.PERSIST, orphanRemoval = false)
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.PERSIST)
     private List<Course> taughtCourses;
 
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST)
     private List<StudentCourseAssociation> enrolledCourses;
 
 

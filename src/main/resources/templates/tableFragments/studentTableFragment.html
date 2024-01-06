@@ -41,8 +41,8 @@
                     <td th:text="${student.getSemester()}"></td>
                     <td th:text="${student.getEnrolledCourses().size()}"></td>
                     <td style="text-align: center;">
-                        <button title="Add Enrolled Course" th:data-id="${student.id}"
-                                type="button" disabled>
+                        <button title="Show Enrolled Courses" th:data-id="${student.id}" type="button"
+                                onclick="openEnrolledCoursesModal(this.getAttribute('data-id'))">
                             <i class="fa-brands fa-leanpub"></i>
                         </button>
                         <button title="Edit Student" th:data-id="${student.id}" type="button"

@@ -1,7 +1,10 @@
 package com.kostis.teachersdemo.service.impl;
 
 import com.kostis.teachersdemo.entities.Course;
+import com.kostis.teachersdemo.entities.StudentCourseAssociation;
 import com.kostis.teachersdemo.entities.User;
+import com.kostis.teachersdemo.models.CourseModel;
+import com.kostis.teachersdemo.models.StudentModel;
 import com.kostis.teachersdemo.repo.CourseRepository;
 import com.kostis.teachersdemo.repo.RoleRepository;
 import com.kostis.teachersdemo.repo.StudentCourseAssociationRepository;
@@ -9,6 +12,7 @@ import com.kostis.teachersdemo.repo.UserRepository;
 import com.kostis.teachersdemo.service.IUserService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -125,5 +129,76 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void removeTeachingCourse(User selectedTeacher, Course selectedCourse) {
         System.out.println("Inside UserService.removeTeachingCourse()....");
+    }
+
+    @Override
+    public StudentModel getStudentModelById(Integer id) {
+        User userFound = userRepository.findById(id);
+        StudentModel studentModel = null;
+        if (userFound!=null && userFound.getRole().getId().equals(2)){
+            studentModel = new StudentModel();
+            studentModel.setId(userFound.getId());
+            studentModel.setFirstname(userFound.getFirstname());
+            studentModel.setLastname(userFound.getLastname());
+            studentModel.setFullName(studentModel.getLastname()+" "+studentModel.getFirstname());
+
+            studentModel.setCourseModelList(Collections.emptyList());
+
+            List<CourseModel> courseModels = populateCourseModelList(userFound);
+            studentModel.setCourseModelList(courseModels);
+
+            populateNotAttendingCourses(studentModel);
+
+            return studentModel;
+        }
+        return null;
+    }
+
+    private static List<CourseModel> populateCourseModelList(User userFound) {
+        List<CourseModel> courseModels = new ArrayList<>();
+        for (StudentCourseAssociation association: userFound.getEnrolledCourses()){
+            CourseModel courseModel = new CourseModel();
+            courseModel.setId(association.getCourse().getId());
+            courseModel.setName(association.getCourse().getName());
+            courseModel.setDescription(association.getCourse().getDescription());
+            courseModel.setSemester(association.getCourse().getSemester());
+            String teacherFullName = "-";
+            if (association.getCourse().getTeacher() != null){
+                teacherFullName = association.getCourse().getTeacher().getLastname() + " " + association.getCourse().getTeacher().getFirstname();
+            }
+            courseModel.setTeacherFullName(teacherFullName);
+            courseModels.add(courseModel);
+        }
+        return courseModels;
+    }
+
+    private void populateNotAttendingCourses(StudentModel studentModel){
+        List<Course> allCourses = courseRepository.findAll();
+        List<CourseModel> notAttendingCourseModels = new ArrayList<>();
+
+        for (Course course: allCourses){
+            boolean isAttending = false;
+            for (CourseModel courseModel: studentModel.getCourseModelList()){
+                if (course.getId().equals(courseModel.getId())){
+                    isAttending = true;
+                    break;
+                }
+            }
+
+            if (!isAttending){
+                CourseModel model = new CourseModel();
+                model.setId(course.getId());
+                model.setName(course.getName());
+                model.setDescription(course.getDescription());
+                model.setSemester(course.getSemester());
+                String teacherFullName = "-";
+                if (course.getTeacher() != null){
+                    teacherFullName = course.getTeacher().getLastname() + " " + course.getTeacher().getFirstname();
+                }
+                model.setTeacherFullName(teacherFullName);
+                notAttendingCourseModels.add(model);
+            }
+        }
+        studentModel.setNotAttendingCourseModelList(notAttendingCourseModels);
     }
 }
