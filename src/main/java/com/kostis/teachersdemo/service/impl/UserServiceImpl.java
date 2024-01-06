@@ -121,4 +121,9 @@ public class UserServiceImpl implements IUserService {
 
         userRepository.save(user);
     }
+
+    @Override
+    public void removeTeachingCourse(User selectedTeacher, Course selectedCourse) {
+        System.out.println("Inside UserService.removeTeachingCourse()....");
+    }
 }

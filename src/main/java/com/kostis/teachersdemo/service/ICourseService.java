@@ -18,4 +18,10 @@ public interface ICourseService {
     void deleteCourse(Course course) throws Exception;
 
     void createNewCourse(Course course);
+
+    void removeTeacherFromCourse(Integer selectedTeacherId, Integer selectedCourseId) throws Exception;
+
+    List<Course> getAllCoursesWithoutTeacher();
+
+    void addTeacherToCourse(Integer selectedTeacherId, Integer selectedCourseId) throws Exception;
 }

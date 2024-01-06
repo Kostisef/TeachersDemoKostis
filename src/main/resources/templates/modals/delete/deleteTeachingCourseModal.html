@@ -1,0 +1,34 @@
+<div th:fragment="deleteTeachingCourseFragment">
+    <!-- Modal -->
+
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('deleteTeachingCourseModal')">&times;</span>
+
+        <form th:action="@{/removeTeachingCourse}" method="post">
+            <input type="hidden" id="mdl-deleteTeachingCourse-teacher-id" name="selectedTeacher.id" th:value="${selectedTeacher != null ? selectedTeacher.id : null}" />
+            <input type="hidden" id="mdl-deleteTeachingCourse-course-id" name="selectedCourse.id" th:value="${selectedCourse != null ? selectedCourse.id : null}" />
+
+            <div class="modal-header">
+                <h2>Remove Course from Teacher</h2>
+                <hr class="modal-hr" />
+            </div>
+
+            <div class="modal-body">
+                <i class="fa-solid fa-exclamation-triangle"></i>
+                <span>You are going to remove that course from Teacher record.</span>
+                <span style="display: block;">Are you sure?</span>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="confirm-btn" onclick="closeModal('deleteTeachingCourseModal')"> Delete!
+                    <i class="fa-solid fa-check"></i>
+                </button>
+
+                <button type="button" onclick="closeModal('deleteTeachingCourseModal')"> Cancel
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>

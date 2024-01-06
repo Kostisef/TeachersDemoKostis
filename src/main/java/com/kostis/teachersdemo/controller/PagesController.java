@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Collections;
+
 @Controller
 public class PagesController {
 
@@ -40,9 +42,13 @@ public class PagesController {
     public String redirectToDashboard(Model model) {
         System.out.println("Hello from redirectToDashboard()");
         model.addAttribute("teacherList", userService.getAllTeachers());
+        model.addAttribute("teachingCoursesList", Collections.emptyList());
+        model.addAttribute("test", "Test From Dashboard");
+
         model.addAttribute("studentList", userService.getAllStudents());
         model.addAttribute("roleList", roleService.getAllRoles());
         model.addAttribute("courseList", courseService.getAllCourses());
+        model.addAttribute("coursesWithoutTeacherList", courseService.getAllCoursesWithoutTeacher());
 //        model.addAttribute("successMessage", "Entity saved successfully");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

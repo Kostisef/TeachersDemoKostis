@@ -1,5 +1,6 @@
 package com.kostis.teachersdemo.service;
 
+import com.kostis.teachersdemo.entities.Course;
 import com.kostis.teachersdemo.entities.User;
 
 import java.util.List;
@@ -28,4 +29,6 @@ public interface IUserService {
 
 
     void createNewUser(User user, Integer roleId);
+
+    void removeTeachingCourse(User selectedTeacher, Course selectedCourse);
 }

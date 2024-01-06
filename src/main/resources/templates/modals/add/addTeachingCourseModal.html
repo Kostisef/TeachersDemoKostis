@@ -1,0 +1,56 @@
+<div th:fragment="addTeachingCourseFragment">
+    <!-- Modal -->
+
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('addTeachingCourseModal')">&times;</span>
+
+        <div th:if="${#lists.isEmpty(coursesWithoutTeacherList)}">
+            <div class="modal-header">
+                <h2>No Courses Available</h2>
+                <hr class="modal-hr" />
+            </div>
+            <p>No courses are available to add. Please check back later.</p>
+        </div>
+
+        <div th:unless="${#lists.isEmpty(coursesWithoutTeacherList)}">
+            <form th:action="@{/addTeachingCourse}" method="post">
+                <input type="hidden" id="mdl-addTeachingCourse-teacher-id" name="selectedTeacher.id" th:value="${selectedTeacher != null ? selectedTeacher.id : null}" />
+                <input type="hidden" id="mdl-addTeachingCourse-selected-course-id" name="selectedCourse.id" />
+
+                <div class="modal-header">
+                    <h2>Add Teaching Course</h2>
+                    <hr class="modal-hr" />
+                </div>
+
+                <div class="form-group">
+                    <label for="mdl-addTeachingCourse-course-id">Select Course:</label>
+                    <select id="mdl-addTeachingCourse-course-id" name="courseId" class="form-control" onchange="updateTeachingCourseDetails()">
+                        <option value="" selected disabled aria-disabled="true">Select a Course</option>
+                        <!-- Loop through the coursesList to populate the dropdown options -->
+                        <option th:each="course : ${coursesWithoutTeacherList}" th:value="${course.id}" th:text="${course.name}" th:title="${course.description}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="mdl-addTeachingCourse-course-name">Course Name:</label>
+                    <input type="text" class="form-control" id="mdl-addTeachingCourse-course-name" name="name" disabled/>
+                </div>
+
+                <div class="form-group">
+                    <label for="mdl-addTeachingCourse-course-description">Course Description:</label>
+                    <input type="text" class="form-control" id="mdl-addTeachingCourse-course-description" name="description" disabled/>
+                </div>
+
+                <div class="form-group">
+                    <label for="mdl-addTeachingCourse-course-semester">Course Semester:</label>
+                    <input type="text" class="form-control" id="mdl-addTeachingCourse-course-semester" name="semester" disabled/>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Teaching Course</button>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+

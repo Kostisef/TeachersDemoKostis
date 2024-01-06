@@ -1,0 +1,49 @@
+<div th:fragment="showTeachingCoursesFragment">
+    <!-- Modal -->
+
+    <div class="modal-content" style="width: 75%!important;">
+        <span class="close-btn" onclick="closeModal('showTeachingCoursesModal')">&times;</span>
+
+        <form >
+            <input type="hidden" id="mdl-showTeachingCourse-teacher-id" name="id" />
+
+            <div class="modal-header">
+                <h2 id="teacher-info">Teaching Courses</h2>
+                <hr class="modal-hr" />
+            </div>
+
+            <!--Teaching Courses-->
+            <div class="container">
+                <div class="table-header teacher-info">
+                    <h3 id="table-records-showTeachingRecords-info"></h3>
+
+                    <button title="Add Teaching Course" type="button" onclick="openAddTeachingCourseModal()"> Add Teaching Course
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+
+                <div class="tableFixHead">
+                    <table id="teachingCoursesTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Semester</th>
+                                <th>Enrolled Students</th>
+                                <th style="width: 10%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teachingCoursesTableBody" class="table-body">
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
