@@ -40,7 +40,6 @@ public class PagesController {
 
     @GetMapping("/dashboard")
     public String redirectToDashboard(Model model) {
-        System.out.println("Hello from redirectToDashboard()");
         model.addAttribute("teacherList", userService.getAllTeachers());
         model.addAttribute("teachingCoursesList", Collections.emptyList());
         model.addAttribute("test", "Test From Dashboard");
@@ -49,31 +48,23 @@ public class PagesController {
         model.addAttribute("roleList", roleService.getAllRoles());
         model.addAttribute("courseList", courseService.getAllCourses());
         model.addAttribute("coursesWithoutTeacherList", courseService.getAllCoursesWithoutTeacher());
-//        model.addAttribute("successMessage", "Entity saved successfully");
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        model.addAttribute("username", ((CustomUserDetails) authentication.getPrincipal()).getRealUsername());
-//        model.addAttribute("roleList", roleServiceImpl.getAllRoles());
-//        model.addAttribute("courseList", courseServiceImpl.getAllCourses());
         return "/dashboard";
     }
 
 
     @GetMapping("/401")
     public String redirectTo401(Model model) {
-        System.out.println("Inside redirectTo401()");
         return "error-401";
     }
 
     @GetMapping("/404")
     public String redirectTo404(Model model) {
-        System.out.println("Inside redirectTo404()");
         return "error-404";
     }
 
     @GetMapping("/500")
     public String redirectTo500(Model model) {
-        System.out.println("Inside redirectTo500()");
         return "error-500";
     }
 

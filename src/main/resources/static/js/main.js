@@ -343,22 +343,27 @@ function openEnrolledCoursesModal(studentId){
 }
 
 
-function triggerGrowlModal(msg){
-    console.log("triggerGrowlModal() called with msg: "+ msg);
-    document.getElementById('growl-msg').innerHTML = msg;
+function triggerGrowlModal(msg, isErrorMsg){
+    let modalName = 'infoGrowlModal';
+    let growlMsgId = 'info-growl-msg';
 
-    // Show the modal
-    openModal('growlModal');
+    if (isErrorMsg){
+        modalName = 'errorGrowlModal';
+        growlMsgId = 'error-growl-msg';
+    }
+    document.getElementById(growlMsgId).innerHTML = msg;
+
+    openModal(modalName);
 
     // Timeout to close the modal after 1.5 second
     setTimeout(function () {
-        const modal = document.querySelector('.custom-message-modal');
-        modal.classList.add('fade-out');
+        const modalMsg = document.querySelector('.custom-message-modal');
+        modalMsg.classList.add('fade-out');
 
         // Timeout to play modal's fade-out effect for 0.5 second
         setTimeout(function () {
-            modal.classList.remove('fade-out');
-            closeModal('growlModal');
+            modalMsg.classList.remove('fade-out');
+            closeModal(modalName);
         }, 500);
     }, 1500);
 }

@@ -39,12 +39,13 @@ public class StudentController {
         String growlMsg = "Student created successfully";
         try{
             userService.createNewUser(student, 2);
+            redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
             System.out.println(e.getMessage());
-            growlMsg = "Failed to create student...";
+            growlMsg = "Failed to create student... Exception message: "+e.getMessage();
+            redirectAttributes.addFlashAttribute("errorMessage", growlMsg);
         }
 
-        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         return MAIN_URL;
     }
 
@@ -55,11 +56,11 @@ public class StudentController {
 
         try{
             userService.deleteStudent(studentIncoming);
+            redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
-            growlMsg = "Failed to delete student...";
+            growlMsg = "Failed to delete student... Exception message: "+e.getMessage();
+            redirectAttributes.addFlashAttribute("errorMessage", growlMsg);
         }
-
-        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
 
         return MAIN_URL;
 
@@ -73,12 +74,14 @@ public class StudentController {
 
         try{
             userService.saveUser(selectedStudent, 2);
+            redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
             System.out.println(e.getMessage());
-            growlMsg = "Failed to update Student...";
+            growlMsg = "Failed to update Student... Exception message: "+e.getMessage();
+            redirectAttributes.addFlashAttribute("errorMessage", growlMsg);
         }
 
-        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
+
 
         return MAIN_URL;
     }
@@ -94,12 +97,12 @@ public class StudentController {
 
         try{
             courseService.removeCourseFromStudent(selectedStudentId, selectedCourseId);
+            redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
             System.out.println(e.getMessage());
-            growlMsg = "Failed to remove course from Student...";
+            growlMsg = "Failed to remove course from Student... Exception message: "+e.getMessage();
+            redirectAttributes.addFlashAttribute("errorMessage", growlMsg);
         }
-
-        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
 
         return MAIN_URL;
     }
@@ -114,12 +117,12 @@ public class StudentController {
 
         try{
             courseService.addCourseToStudent(selectedStudentId, selectedCourseId);
+            redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
             System.out.println(e.getMessage());
-            growlMsg = "Failed to add course to Student...";
+            growlMsg = "Failed to add course to Student... Exception message: "+e.getMessage();
+            redirectAttributes.addFlashAttribute("errorMessage", growlMsg);
         }
-
-        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
 
         return MAIN_URL;
     }

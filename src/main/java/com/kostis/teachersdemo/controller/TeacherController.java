@@ -1,6 +1,5 @@
 package com.kostis.teachersdemo.controller;
 
-import com.kostis.teachersdemo.entities.Course;
 import com.kostis.teachersdemo.entities.User;
 import com.kostis.teachersdemo.service.impl.CourseServiceImpl;
 import com.kostis.teachersdemo.service.impl.UserServiceImpl;
@@ -37,12 +36,13 @@ public class TeacherController {
         String growlMsg = "Teacher created successfully";
         try{
             userService.createNewUser(teacher, 1);
+            redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
             System.out.println(e.getMessage());
-            growlMsg = "Failed to create teacher...";
+            growlMsg = "Failed to create teacher... Exception message: "+e.getMessage();
+            redirectAttributes.addFlashAttribute("errorMessage", growlMsg);
         }
 
-        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         return MAIN_URL;
     }
 
@@ -52,11 +52,11 @@ public class TeacherController {
         String growlMsg = "Teacher deleted successfully";
         try{
             userService.deleteTeacher(teacherIncoming);
+            redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
-            growlMsg = "Failed to delete teacher...";
+            growlMsg = "Failed to delete teacher... Exception message: "+e.getMessage();
+            redirectAttributes.addFlashAttribute("errorMessage", growlMsg);
         }
-
-        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
 
         return MAIN_URL;
     }
@@ -69,12 +69,12 @@ public class TeacherController {
 
         try{
             userService.saveUser(selectedTeacher, 1);
+            redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
             System.out.println(e.getMessage());
-            growlMsg = "Failed to update Teacher...";
+            growlMsg = "Failed to update Teacher... Exception message: "+e.getMessage();
+            redirectAttributes.addFlashAttribute("errorMessage", growlMsg);
         }
-
-        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
 
         return MAIN_URL;
     }
@@ -89,12 +89,13 @@ public class TeacherController {
 
         try{
             courseService.removeTeacherFromCourse(selectedTeacherId, selectedCourseId);
+            redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
             System.out.println(e.getMessage());
-            growlMsg = "Failed to remove course from Teacher...";
+            growlMsg = "Failed to remove course from Teacher... Exception message: "+e.getMessage();
+            redirectAttributes.addFlashAttribute("errorMessage", growlMsg);
         }
 
-        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
 
         return MAIN_URL;
     }
@@ -109,16 +110,14 @@ public class TeacherController {
 
         try{
             courseService.addTeacherToCourse(selectedTeacherId, selectedCourseId);
+            redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
             System.out.println(e.getMessage());
-            growlMsg = "Failed to remove course from Teacher...";
+            growlMsg = "Failed to remove course from Teacher... Exception message: '"+e.getMessage()+"'";
+            redirectAttributes.addFlashAttribute("errorMessage", growlMsg);
         }
-
-        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
 
         return MAIN_URL;
     }
-
-
 
 }

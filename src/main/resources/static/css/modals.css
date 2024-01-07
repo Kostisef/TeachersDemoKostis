@@ -38,6 +38,14 @@
     font-weight: normal;
 }
 
+
+.error-modal {
+    background-color: #fcb3be !important;
+    border: 1px solid #f40317 !important;;
+    border-width: 0 0 0 6px !important;;
+    color: #000000 !important;
+}
+
 .custom-message-modal.fade-out {
     animation: fade-out 0.5s ease-in-out; /* Adjust the animation duration */
 }
@@ -121,12 +129,10 @@
     cursor: pointer;
 }
 
-#growl-msg{
+#info-growl-msg, #error-growl-msg{
     font-style: italic;
     font-size: 15px;
 }
-
-
 
 .custom-message-modal .growl-content {
     display: flex;

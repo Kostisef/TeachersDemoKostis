@@ -53,12 +53,12 @@ public class CourseController {
         String growlMsg = "Course created successfully";
         try{
             courseService.createNewCourse(course);
+            redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
             System.out.println(e.getMessage());
-            growlMsg = "Failed to create course...";
+            growlMsg = "Failed to create course... Exception message: "+e.getMessage();
+            redirectAttributes.addFlashAttribute("errorMessage", growlMsg);
         }
-
-        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
 
         return MAIN_URL;
     }
@@ -70,11 +70,11 @@ public class CourseController {
         String growlMsg = "Course deleted successfully";
         try{
             courseService.deleteCourse(courseIncoming);
+            redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
-            growlMsg = "Failed to delete course...";
+            growlMsg = "Failed to delete course... Exception message: "+e.getMessage();
+            redirectAttributes.addFlashAttribute("errorMessage", growlMsg);
         }
-
-        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
 
         return MAIN_URL;
     }
@@ -86,12 +86,13 @@ public class CourseController {
         String growlMsg = "Course updated successfully";
         try{
             courseService.saveCourse(selectedCourse);
+            redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
             System.out.println(e.getMessage());
-            growlMsg = "Failed to update course...";
+            growlMsg = "Failed to update course... Exception message: "+e.getMessage();
+            redirectAttributes.addFlashAttribute("errorMessage", growlMsg);
         }
 
-        redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         return MAIN_URL;
     }
 }

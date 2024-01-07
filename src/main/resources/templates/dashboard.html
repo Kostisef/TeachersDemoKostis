@@ -37,8 +37,12 @@
 <div th:replace="modals/allCrudFragments :: allCrudFragments"></div>
 
 <!-- Growl messages (pop-up) - Modal-->
-<div id="growlModal" class="modal2">
-    <div th:replace="modals/growlModal :: growlFragment"></div>
+<div id="infoGrowlModal" class="modal2">
+    <div th:replace="modals/infoGrowlModal :: infoGrowlFragment"></div>
+</div>
+
+<div id="errorGrowlModal" class="modal2">
+    <div th:replace="modals/errorGrowlModal :: errorGrowlFragment"></div>
 </div>
 
 <script th:inline="javascript">
@@ -49,10 +53,15 @@
     // });
 
     window.onload = function () {
-        const hasMsg = [[${successMessage}]];
-        console.log("hasMsg: "+ hasMsg);
-        if (hasMsg) {
-            triggerGrowlModal([[${successMessage}]]);
+        const hasInfoMsg = [[${successMessage}]];
+        const hasErrorMsg = [[${errorMessage}]];
+        console.log("hasInfoMsg: "+ hasInfoMsg);
+        console.log("hasErrorMsg: "+ hasErrorMsg);
+
+        if (hasInfoMsg) {
+            triggerGrowlModal([[${successMessage}]], false);
+        } else if (hasErrorMsg) {
+            triggerGrowlModal([[${errorMessage}]], true);
         }
     }
 
