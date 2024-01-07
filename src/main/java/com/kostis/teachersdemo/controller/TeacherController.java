@@ -1,6 +1,8 @@
 package com.kostis.teachersdemo.controller;
 
 import com.kostis.teachersdemo.entities.User;
+import com.kostis.teachersdemo.models.TeacherModel;
+import com.kostis.teachersdemo.service.DTOService;
 import com.kostis.teachersdemo.service.impl.CourseServiceImpl;
 import com.kostis.teachersdemo.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -16,10 +18,13 @@ public class TeacherController {
     private final UserServiceImpl userService;
     private final CourseServiceImpl courseService;
 
+    private final DTOService dtoService;
 
-    public TeacherController(UserServiceImpl userService, CourseServiceImpl courseService) {
+
+    public TeacherController(UserServiceImpl userService, CourseServiceImpl courseService, DTOService dtoService) {
         this.userService = userService;
         this.courseService = courseService;
+        this.dtoService = dtoService;
     }
 
     @RequestMapping("/getTeacher")
@@ -29,13 +34,21 @@ public class TeacherController {
         return teacherFound;
     }
 
+    @RequestMapping("/getTeacherModel")
+    @ResponseBody
+    public TeacherModel getTeacherModel(Integer id) {
+        User teacherFound = userService.getUserById(id);
+
+        return dtoService.convertUserToTeacherModel(teacherFound);
+    }
+
 
     @PostMapping("/addNewTeacher")
-    public String addNewTeacher(User teacher, RedirectAttributes redirectAttributes){
+    public String addNewTeacher(TeacherModel teacher, @RequestParam("password") String rawPassword, RedirectAttributes redirectAttributes){
 
         String growlMsg = "Teacher created successfully";
         try{
-            userService.createNewUser(teacher, 1);
+            userService.createNewTeacher(teacher, rawPassword);
             redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -47,7 +60,7 @@ public class TeacherController {
     }
 
     @PostMapping("/deleteTeacher")
-    public String deleteTeacher(User teacherIncoming, RedirectAttributes redirectAttributes){
+    public String deleteTeacher(TeacherModel teacherIncoming, RedirectAttributes redirectAttributes){
         System.out.println("TeacherId to delete: "+ teacherIncoming.getId());
         String growlMsg = "Teacher deleted successfully";
         try{
@@ -63,12 +76,12 @@ public class TeacherController {
 
 
     @PostMapping("/saveTeacher")
-    public String saveTeacher(User selectedTeacher, RedirectAttributes redirectAttributes) {
+    public String saveTeacher(TeacherModel selectedTeacher, RedirectAttributes redirectAttributes) {
         System.out.println("TeacherId to update: "+ selectedTeacher.getId());
         String growlMsg = "Teacher updated successfully";
 
         try{
-            userService.saveUser(selectedTeacher, 1);
+            userService.saveTeacher(selectedTeacher);
             redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
             System.out.println(e.getMessage());

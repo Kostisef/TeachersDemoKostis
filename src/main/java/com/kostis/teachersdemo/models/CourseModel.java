@@ -16,6 +16,8 @@ public class CourseModel {
     private Integer semester;
     private String teacherFullName;
 
+    private Integer numOfStudents;
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("CourseModel{");
@@ -23,6 +25,7 @@ public class CourseModel {
         sb.append(", name='").append(name).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", semester=").append(semester);
+        sb.append(", numOfStudents=").append(numOfStudents);
         sb.append(", teacherFullName='").append(teacherFullName).append('\'');
         sb.append('}');
         return sb.toString();

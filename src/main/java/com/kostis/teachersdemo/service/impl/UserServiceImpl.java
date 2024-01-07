@@ -5,11 +5,14 @@ import com.kostis.teachersdemo.entities.StudentCourseAssociation;
 import com.kostis.teachersdemo.entities.User;
 import com.kostis.teachersdemo.models.CourseModel;
 import com.kostis.teachersdemo.models.StudentModel;
+import com.kostis.teachersdemo.models.TeacherModel;
 import com.kostis.teachersdemo.repo.CourseRepository;
 import com.kostis.teachersdemo.repo.RoleRepository;
 import com.kostis.teachersdemo.repo.StudentCourseAssociationRepository;
 import com.kostis.teachersdemo.repo.UserRepository;
+import com.kostis.teachersdemo.service.DTOService;
 import com.kostis.teachersdemo.service.IUserService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,11 +28,14 @@ public class UserServiceImpl implements IUserService {
     private final CourseRepository courseRepository;
     private final StudentCourseAssociationRepository studentCourseAssociationRepository;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, CourseRepository courseRepository, StudentCourseAssociationRepository studentCourseAssociationRepository) {
+    private final DTOService dtoService;
+
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, CourseRepository courseRepository, StudentCourseAssociationRepository studentCourseAssociationRepository, DTOService dtoService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.courseRepository = courseRepository;
         this.studentCourseAssociationRepository = studentCourseAssociationRepository;
+        this.dtoService = dtoService;
     }
 
 
@@ -37,31 +43,34 @@ public class UserServiceImpl implements IUserService {
      * Find All Teachers
      */
     @Override
-    public List<User> getAllTeachers() {
-        return userRepository.findByRole_Name("TEACHER");
+    public List<TeacherModel> getAllTeacherModels() {
+        List<User> userList = userRepository.findByRole_Name("TEACHER");
+
+        List<TeacherModel> teacherModelList = new ArrayList<>();
+        for (User user: userList){
+            teacherModelList.add(dtoService.convertUserToTeacherModel(user));
+        }
+        return teacherModelList;
     }
 
     /**
      * Find All Students
      */
     @Override
-    public List<User> getAllStudents() {
-        return userRepository.findByRole_Name("STUDENT");
+    public List<StudentModel> getAllStudentModels() {
+        List<User> userList = userRepository.findByRole_Name("STUDENT");
+
+        List<StudentModel> studentModelList = new ArrayList<>();
+        for (User user: userList){
+            studentModelList.add(dtoService.convertUserToStudentModel(user));
+        }
+        return studentModelList;
     }
 
-    /**
-     * Find User By Id
-     *
-     * @param id
-     */
-    @Override
-    public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
-    }
 
     @Override
     public User getUserById(Integer id) {
-        return userRepository.findById(id);
+        return userRepository.findById(id).orElse(null);
     }
 
 
@@ -71,20 +80,27 @@ public class UserServiceImpl implements IUserService {
      * @param user
      */
     @Override
-    public void saveUser(User user, Integer roleId) throws Exception {
-        User userToUpdate = userRepository.findById(user.getId());
+    public void saveTeacher(TeacherModel teacherModel) throws Exception {
+        User userFound = userRepository.findById(teacherModel.getId()).orElse(null);
 
-        if (userToUpdate != null){
-            userToUpdate.setFirstname(user.getFirstname());
-            userToUpdate.setLastname(user.getLastname());
-            userToUpdate.setUsername(user.getUsername());
-            userToUpdate.setEmail(user.getEmail());
-            userToUpdate.setStartYear(user.getStartYear());
+        if (userFound != null){
+            User userToUpdate = dtoService.convertTeacherModelToUser(teacherModel);
+            userToUpdate.setId(userFound.getId());
+            userToUpdate.setPassword(userFound.getPassword());
+            userRepository.save(userToUpdate);
+        } else {
+            throw new Exception("Null incoming user to update.");
+        }
+    }
 
-            if (roleId.equals(2)){
-                userToUpdate.setSemester(user.getSemester());
-            }
+    @Override
+    public void saveStudent(StudentModel studentModel) throws Exception {
+        User userFound = userRepository.findById(studentModel.getId()).orElse(null);
 
+        if (userFound != null){
+            User userToUpdate = dtoService.convertStudentModelToUser(studentModel);
+            userToUpdate.setId(userFound.getId());
+            userToUpdate.setPassword(userFound.getPassword());
             userRepository.save(userToUpdate);
         } else {
             throw new Exception("Null incoming user to update.");
@@ -92,7 +108,7 @@ public class UserServiceImpl implements IUserService {
     }
 
 
-    public void deleteTeacher(User teacher){
+    public void deleteTeacher(TeacherModel teacher){
         User teacherToDelete = getUserById(teacher.getId());
         for (Course course : teacherToDelete.getTaughtCourses()){
             course.setTeacher(null);
@@ -101,7 +117,7 @@ public class UserServiceImpl implements IUserService {
         userRepository.delete(teacherToDelete);
     }
 
-    public void deleteStudent(User student){
+    public void deleteStudent(StudentModel student){
         User studentToDelete = getUserById(student.getId());
 
         if (!studentToDelete.getEnrolledCourses().isEmpty()){
@@ -113,92 +129,36 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void createNewUser(User user, Integer roleId) {
-        user.setId(null);
-        user.setTaughtCourses(Collections.emptyList());
-        user.setEnrolledCourses(Collections.emptyList());
-        user.setRole(roleRepository.findById(roleId)); // 1: Teacher, 2: Student
+    public void createNewStudent(StudentModel studentModel, String rawPassword) {
+        studentModel.setId(null);
+        User studentToInsert = dtoService.convertStudentModelToUser(studentModel);
 
-        if (roleId.equals(1)){
-            user.setSemester(null);
-        }
+        studentToInsert.setPassword(bCryptRawPassword(rawPassword));
 
-        userRepository.save(user);
+        userRepository.save(studentToInsert);
     }
 
     @Override
-    public void removeTeachingCourse(User selectedTeacher, Course selectedCourse) {
-        System.out.println("Inside UserService.removeTeachingCourse()....");
+    public void createNewTeacher(TeacherModel teacherModel, String rawPassword) {
+        teacherModel.setId(null);
+        User teacherToInsert = dtoService.convertTeacherModelToUser(teacherModel);
+
+        teacherToInsert.setPassword(bCryptRawPassword(rawPassword));
+
+        userRepository.save(teacherToInsert);
     }
 
     @Override
     public StudentModel getStudentModelById(Integer id) {
-        User userFound = userRepository.findById(id);
-        StudentModel studentModel = null;
+        User userFound = userRepository.findById(id).orElse(null);
         if (userFound!=null && userFound.getRole().getId().equals(2)){
-            studentModel = new StudentModel();
-            studentModel.setId(userFound.getId());
-            studentModel.setFirstname(userFound.getFirstname());
-            studentModel.setLastname(userFound.getLastname());
-            studentModel.setFullName(studentModel.getLastname()+" "+studentModel.getFirstname());
-
-            studentModel.setCourseModelList(Collections.emptyList());
-
-            List<CourseModel> courseModels = populateCourseModelList(userFound);
-            studentModel.setCourseModelList(courseModels);
-
-            populateNotAttendingCourses(studentModel);
-
-            return studentModel;
+            return dtoService.convertUserToStudentModel(userFound);
         }
         return null;
     }
 
-    private static List<CourseModel> populateCourseModelList(User userFound) {
-        List<CourseModel> courseModels = new ArrayList<>();
-        for (StudentCourseAssociation association: userFound.getEnrolledCourses()){
-            CourseModel courseModel = new CourseModel();
-            courseModel.setId(association.getCourse().getId());
-            courseModel.setName(association.getCourse().getName());
-            courseModel.setDescription(association.getCourse().getDescription());
-            courseModel.setSemester(association.getCourse().getSemester());
-            String teacherFullName = "-";
-            if (association.getCourse().getTeacher() != null){
-                teacherFullName = association.getCourse().getTeacher().getLastname() + " " + association.getCourse().getTeacher().getFirstname();
-            }
-            courseModel.setTeacherFullName(teacherFullName);
-            courseModels.add(courseModel);
-        }
-        return courseModels;
-    }
-
-    private void populateNotAttendingCourses(StudentModel studentModel){
-        List<Course> allCourses = courseRepository.findAll();
-        List<CourseModel> notAttendingCourseModels = new ArrayList<>();
-
-        for (Course course: allCourses){
-            boolean isAttending = false;
-            for (CourseModel courseModel: studentModel.getCourseModelList()){
-                if (course.getId().equals(courseModel.getId())){
-                    isAttending = true;
-                    break;
-                }
-            }
-
-            if (!isAttending){
-                CourseModel model = new CourseModel();
-                model.setId(course.getId());
-                model.setName(course.getName());
-                model.setDescription(course.getDescription());
-                model.setSemester(course.getSemester());
-                String teacherFullName = "-";
-                if (course.getTeacher() != null){
-                    teacherFullName = course.getTeacher().getLastname() + " " + course.getTeacher().getFirstname();
-                }
-                model.setTeacherFullName(teacherFullName);
-                notAttendingCourseModels.add(model);
-            }
-        }
-        studentModel.setNotAttendingCourseModelList(notAttendingCourseModels);
+    private String bCryptRawPassword(String rawPass){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(rawPass);
     }
 }

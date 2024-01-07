@@ -4,8 +4,8 @@ body {
     font-family: Arial, sans-serif;
     width: 70%;
     margin: 0 auto;
-    border: 1px solid lightgray;
-    /*! background-color: #ececec; */
+    border: 1px solid #443c3c;
+    background-color: darkgray;
 }
 
 .container {
@@ -47,7 +47,7 @@ table {
 }
 
 th, td {
-    border: 1px solid #ddd;
+    border: 1px solid #443c3c;
     padding: 8px;
     text-align: left;
 }
@@ -69,7 +69,7 @@ tr:hover {
     overflow-y: auto;
     max-height: 300px;
     margin-top: 10px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #443c3c;
 }
 
 thead {
@@ -88,7 +88,7 @@ thead {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
-    border: 1px solid #ccc;
+    border: 1px solid #443c3c;
     border-radius: 4px;
 }
 

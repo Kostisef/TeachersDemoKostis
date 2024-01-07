@@ -3,9 +3,11 @@ package com.kostis.teachersdemo.service.impl;
 import com.kostis.teachersdemo.entities.Course;
 import com.kostis.teachersdemo.entities.StudentCourseAssociation;
 import com.kostis.teachersdemo.entities.User;
+import com.kostis.teachersdemo.models.CourseModel;
 import com.kostis.teachersdemo.repo.CourseRepository;
 import com.kostis.teachersdemo.repo.StudentCourseAssociationRepository;
 import com.kostis.teachersdemo.repo.UserRepository;
+import com.kostis.teachersdemo.service.DTOService;
 import com.kostis.teachersdemo.service.ICourseService;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -17,24 +19,23 @@ import java.util.List;
 public class CourseServiceImpl implements ICourseService {
 
     private final CourseRepository courseRepository;
+    private final StudentCourseAssociationRepository associationRepository;
     private final UserRepository userRepository;
+    private final DTOService dtoService;
 
     private final StudentCourseAssociationRepository studentCourseAssociationRepository;
 
-    public CourseServiceImpl(CourseRepository courseRepository, UserRepository userRepository, StudentCourseAssociationRepository studentCourseAssociationRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, StudentCourseAssociationRepository associationRepository, UserRepository userRepository, DTOService dtoService, StudentCourseAssociationRepository studentCourseAssociationRepository) {
         this.courseRepository = courseRepository;
+        this.associationRepository = associationRepository;
         this.userRepository = userRepository;
+        this.dtoService = dtoService;
         this.studentCourseAssociationRepository = studentCourseAssociationRepository;
     }
 
     @Override
-    public List<Course> getAllCourses() {
-        return courseRepository.findAll();
-    }
-
-    @Override
-    public Course getCourseById(Long id) {
-        return courseRepository.findById(id).orElse(null);
+    public List<CourseModel> getAllCourseModels() {
+        return dtoService.convertCourseListToModelList(courseRepository.findAll());
     }
 
     @Override
@@ -43,7 +44,7 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public void saveCourse(Course course) throws Exception {
+    public void saveCourse(CourseModel course) throws Exception {
         Course courseToUpdate = courseRepository.findById(course.getId());
 
         if (courseToUpdate!=null){
@@ -58,10 +59,16 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public void deleteCourse(Course course) throws Exception {
+    public void deleteCourse(CourseModel course) throws Exception {
         Course courseToDelete = getCourseById(course.getId());
 
         if (courseToDelete !=null){
+            if (courseToDelete.getStudentAssociations()!=null){
+                for (StudentCourseAssociation association: courseToDelete.getStudentAssociations()){
+                    associationRepository.deleteById(association.getId());
+                }
+            }
+
             courseRepository.delete(courseToDelete);
         } else {
             throw new Exception("Null incoming course to delete.");
@@ -69,15 +76,17 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public void createNewCourse(Course course){
-        course.setId(null);
-        courseRepository.save(course);
+    public void createNewCourse(CourseModel course){
+        Course courseToInsert = dtoService.convertModelToCourse(course);
+        courseToInsert.setId(null);
+
+        courseRepository.save(courseToInsert);
     }
 
     @Override
     public void removeTeacherFromCourse(Integer selectedTeacherId, Integer selectedCourseId) throws Exception {
         Course course = getCourseById(selectedCourseId);
-        User teacher = userRepository.findById(selectedTeacherId);
+        User teacher = userRepository.findById(selectedTeacherId).orElse(null);
 
         if (teacher.getRole().getId().equals(1) && course.getTeacher().getId().equals(teacher.getId())){
             course.setTeacher(null);
@@ -92,7 +101,7 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     public void addTeacherToCourse(Integer selectedTeacherId, Integer selectedCourseId) throws Exception {
         Course course = getCourseById(selectedCourseId);
-        User teacher = userRepository.findById(selectedTeacherId);
+        User teacher = userRepository.findById(selectedTeacherId).orElse(null);
 
         if (teacher.getRole().getId().equals(1) && course.getTeacher() == null){
             course.setTeacher(teacher);
@@ -107,7 +116,7 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     public void removeCourseFromStudent(Integer selectedStudentId, Integer selectedCourseId) throws Exception {
         Course course = getCourseById(selectedCourseId);
-        User student = userRepository.findById(selectedStudentId);
+        User student = userRepository.findById(selectedStudentId).orElse(null);
 
         if (course!=null && student!=null){
             StudentCourseAssociation association = studentCourseAssociationRepository.findByStudent_IdAndCourse_Id(student.getId(), course.getId());
@@ -124,7 +133,7 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     public void addCourseToStudent(Integer selectedStudentId, Integer selectedCourseId) throws Exception {
         Course course = getCourseById(selectedCourseId);
-        User student = userRepository.findById(selectedStudentId);
+        User student = userRepository.findById(selectedStudentId).orElse(null);
 
         if (course!=null && student!=null){
             StudentCourseAssociation association = new StudentCourseAssociation();
@@ -140,15 +149,16 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public List<Course> getAllCoursesWithoutTeacher() {
+    public List<CourseModel> getAllCoursesWithoutTeacher() {
         List<Course> courseList = new ArrayList<>();
         for (Course course: courseRepository.findAll()){
             if (course.getTeacher() == null){
                 courseList.add(course);
             }
         }
-        return courseList;
-    }
 
+        return dtoService.convertCourseListToModelList(courseList);
+
+    }
 
 }

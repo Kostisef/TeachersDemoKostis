@@ -34,13 +34,9 @@
                     <td th:text="${course.name}"></td>
                     <td th:text="${course.description}"></td>
                     <td th:text="${course.semester}"></td>
+                    <td th:text="${course.teacherFullName}"></td>
+                    <td th:text="${course.numOfStudents}"></td>
 
-
-                    <td th:if="${course.teacher !=null }" th:text="${course.teacher.lastname + ' ' + course.teacher.firstname}"></td>
-                    <td th:if="${course.teacher == null}">-</td>
-
-
-                    <td th:text="${course.studentAssociations.size()}"></td>
                     <td style="text-align: center;">
                         <button title="Edit Course" th:data-id="${course.id}" type="button"
                                 onclick="openEditCourseModal(this.getAttribute('data-id'))">

@@ -1,8 +1,8 @@
 package com.kostis.teachersdemo.service;
 
-import com.kostis.teachersdemo.entities.Course;
 import com.kostis.teachersdemo.entities.User;
 import com.kostis.teachersdemo.models.StudentModel;
+import com.kostis.teachersdemo.models.TeacherModel;
 
 import java.util.List;
 
@@ -11,27 +11,25 @@ public interface IUserService {
     /**
      * Find All Teachers
      */
-    List<User> getAllTeachers();
+    List<TeacherModel> getAllTeacherModels();
 
     /**
      * Find All Students
      */
-    List<User> getAllStudents();
+    List<StudentModel> getAllStudentModels();
 
-    /**
-     * Find User By Id
-     */
-    User getUserById(Long id);
 
     User getUserById(Integer id);
 
 
-    void saveUser(User user, Integer roleId) throws Exception;
+    void saveTeacher(TeacherModel teacherModel) throws Exception;
+
+    void saveStudent(StudentModel studentModel) throws Exception;
 
 
-    void createNewUser(User user, Integer roleId);
+    void createNewStudent(StudentModel studentModel, String rawPassword);
 
-    void removeTeachingCourse(User selectedTeacher, Course selectedCourse);
+    void createNewTeacher(TeacherModel teacherModel, String rawPassword);
 
     StudentModel getStudentModelById(Integer id);
 }

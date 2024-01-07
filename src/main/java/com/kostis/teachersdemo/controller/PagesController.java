@@ -40,13 +40,12 @@ public class PagesController {
 
     @GetMapping("/dashboard")
     public String redirectToDashboard(Model model) {
-        model.addAttribute("teacherList", userService.getAllTeachers());
+        model.addAttribute("teacherList", userService.getAllTeacherModels());
         model.addAttribute("teachingCoursesList", Collections.emptyList());
-        model.addAttribute("test", "Test From Dashboard");
 
-        model.addAttribute("studentList", userService.getAllStudents());
+        model.addAttribute("studentList", userService.getAllStudentModels());
         model.addAttribute("roleList", roleService.getAllRoles());
-        model.addAttribute("courseList", courseService.getAllCourses());
+        model.addAttribute("courseList", courseService.getAllCourseModels());
         model.addAttribute("coursesWithoutTeacherList", courseService.getAllCoursesWithoutTeacher());
 
         return "/dashboard";

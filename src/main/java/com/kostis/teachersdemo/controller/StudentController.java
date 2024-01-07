@@ -35,10 +35,10 @@ public class StudentController {
 
 
     @PostMapping("/addNewStudent")
-    public String addNewStudent(User student, RedirectAttributes redirectAttributes){
+    public String addNewStudent(StudentModel student, @RequestParam("password") String rawPassword, RedirectAttributes redirectAttributes){
         String growlMsg = "Student created successfully";
         try{
-            userService.createNewUser(student, 2);
+            userService.createNewStudent(student, rawPassword);
             redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -50,7 +50,7 @@ public class StudentController {
     }
 
     @PostMapping("/deleteStudent")
-    public String deleteStudent(User studentIncoming, RedirectAttributes redirectAttributes){
+    public String deleteStudent(StudentModel studentIncoming, RedirectAttributes redirectAttributes){
         System.out.println("StudentId to delete: "+ studentIncoming.getId());
         String growlMsg = "Student deleted successfully";
 
@@ -68,12 +68,12 @@ public class StudentController {
 
 
     @PostMapping("/saveStudent")
-    public String saveStudent(User selectedStudent, RedirectAttributes redirectAttributes) {
+    public String saveStudent(StudentModel selectedStudent, RedirectAttributes redirectAttributes) {
         System.out.println("StudentId to update: "+ selectedStudent.getId());
         String growlMsg = "Student updated successfully";
 
         try{
-            userService.saveUser(selectedStudent, 2);
+            userService.saveStudent(selectedStudent);
             redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
             System.out.println(e.getMessage());

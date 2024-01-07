@@ -33,13 +33,13 @@
                 <tbody th:if="${not #lists.isEmpty(studentList)}">
                 <tr th:each="student : ${studentList}">
                     <td th:text="${student.id}"></td>
-                    <td th:text="${student.getFirstname()}"></td>
-                    <td th:text="${student.getLastname()}"></td>
-                    <td th:text="${student.getUsername()}"></td>
-                    <td th:text="${student.getEmail()}"></td>
-                    <td th:text="${student.getStartYear()}"></td>
-                    <td th:text="${student.getSemester()}"></td>
-                    <td th:text="${student.getEnrolledCourses().size()}"></td>
+                    <td th:text="${student.firstname}"></td>
+                    <td th:text="${student.lastname}"></td>
+                    <td th:text="${student.username}"></td>
+                    <td th:text="${student.email}"></td>
+                    <td th:text="${student.startYear}"></td>
+                    <td th:text="${student.semester}"></td>
+                    <td th:text="${student.courseModelList.size()}"></td>
                     <td style="text-align: center;">
                         <button title="Show Enrolled Courses" th:data-id="${student.id}" type="button"
                                 onclick="openEnrolledCoursesModal(this.getAttribute('data-id'))">

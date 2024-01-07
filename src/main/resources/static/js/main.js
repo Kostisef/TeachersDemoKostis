@@ -155,7 +155,7 @@ function openDeleteStudentModal(studentId){
 function openEditCourseModal(courseId){
 
     $.ajax({
-        url: '/teachersDemoKostis/getCourse?id='+courseId,
+        url: '/teachersDemoKostis/getCourseModel?id='+courseId,
         type: 'GET',
         dataType: 'json',
         success: function(course) {
@@ -175,7 +175,7 @@ function openEditCourseModal(courseId){
 // MODAL: DELETE COURSE
 function openDeleteCourseModal(courseId){
     $.ajax({
-        url: '/teachersDemoKostis/getCourse?id='+courseId,
+        url: '/teachersDemoKostis/getCourseModel?id='+courseId,
         type: 'GET',
         dataType: 'json',
         success: function(course) {
@@ -382,7 +382,7 @@ function updateTeachingCourseDetails() {
     const courseId = document.getElementById("mdl-addTeachingCourse-course-id").value;
 
     $.ajax({
-        url: '/teachersDemoKostis/getCourse?id='+courseId,
+        url: '/teachersDemoKostis/getCourseModel?id='+courseId,
         type: 'GET',
         dataType: 'json',
         success: function(course) {

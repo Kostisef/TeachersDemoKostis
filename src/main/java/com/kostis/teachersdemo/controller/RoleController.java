@@ -1,6 +1,7 @@
 package com.kostis.teachersdemo.controller;
 
 import com.kostis.teachersdemo.entities.Role;
+import com.kostis.teachersdemo.models.RoleModel;
 import com.kostis.teachersdemo.repo.RoleRepository;
 import com.kostis.teachersdemo.service.impl.RoleServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -28,18 +29,17 @@ public class RoleController {
 
 
     @PostMapping("/addNewRole")
-    public String addNewRole(Role role, RedirectAttributes redirectAttributes){
+    public String addNewRole(RoleModel role, RedirectAttributes redirectAttributes){
         String growlMsg = "Role created successfully";
 
         try {
-            roleService.saveRole(role);
+            roleService.addNewRole(role);
             redirectAttributes.addFlashAttribute("successMessage", growlMsg);
         } catch (Exception e){
             growlMsg = "Role not created... Exception message: "+e.getMessage();
             System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("errorMessage", growlMsg);
         }
-
 
         return MAIN_URL;
     }

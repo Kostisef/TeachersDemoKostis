@@ -31,11 +31,11 @@
                 <tr th:each="teacher : ${teacherList}">
                     <td th:text="${teacher.id}"></td>
                     <td th:text="${teacher.firstname}"></td>
-                    <td th:text="${teacher.getLastname()}"></td>
-                    <td th:text="${teacher.getUsername()}"></td>
-                    <td th:text="${teacher.getEmail()}"></td>
-                    <td th:text="${teacher.getStartYear()}"></td>
-                    <td th:text="${teacher.getTaughtCourses().size()}"></td>
+                    <td th:text="${teacher.lastname}"></td>
+                    <td th:text="${teacher.username}"></td>
+                    <td th:text="${teacher.email}"></td>
+                    <td th:text="${teacher.startYear}"></td>
+                    <td th:text="${teacher.teachingCourseModelList.size()}"></td>
                     <td style="text-align: center;">
                         <button title="Show Teaching Courses" th:data-id="${teacher.id}" type="button"
                                 onclick="openShowTeachingCoursesModal(this.getAttribute('data-id'))">
