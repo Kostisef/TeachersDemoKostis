@@ -55,13 +55,18 @@
     window.onload = function () {
         const hasInfoMsg = [[${successMessage}]];
         const hasErrorMsg = [[${errorMessage}]];
-        console.log("hasInfoMsg: "+ hasInfoMsg);
-        console.log("hasErrorMsg: "+ hasErrorMsg);
+        const hasWelcomeMsg = [[${welcomeMsg}]];
+
+        console.log("hasWelcomeMsg: " + hasWelcomeMsg);
+        console.log("hasInfoMsg: " + hasInfoMsg);
+        console.log("hasErrorMsg: " + hasErrorMsg);
 
         if (hasInfoMsg) {
-            triggerGrowlModal([[${successMessage}]], false);
+            triggerGrowlModal([[${successMessage}]], false); // success growl modal
         } else if (hasErrorMsg) {
-            triggerGrowlModal([[${errorMessage}]], true);
+            triggerGrowlModal([[${errorMessage}]], true); // error growl modal
+        } else if (hasWelcomeMsg) {
+            triggerGrowlModal([[${welcomeMsg}]], false); // success growl modal
         }
     }
 

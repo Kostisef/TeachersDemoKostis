@@ -10,7 +10,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collections;
 
 @Controller
@@ -28,9 +30,11 @@ public class PagesController {
 
 
     @GetMapping("/login")
-    public String loginAction(Model model) {
+    public String loginAction(RedirectAttributes redirectAttributes) {
+        System.out.println("Inside here!!!!");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication!=null && !(authentication instanceof AnonymousAuthenticationToken)) {
+
             return "redirect:/dashboard";
         }
 
@@ -39,7 +43,12 @@ public class PagesController {
 
 
     @GetMapping("/dashboard")
-    public String redirectToDashboard(Model model) {
+    public String redirectToDashboard(Model model, HttpSession session) {
+        String welcomeMsg = (String) session.getAttribute("welcomeMsg");
+        if (welcomeMsg!=null){
+            model.addAttribute("welcomeMsg", welcomeMsg);
+            session.removeAttribute("welcomeMsg");
+        }
         model.addAttribute("teacherList", userService.getAllTeacherModels());
         model.addAttribute("teachingCoursesList", Collections.emptyList());
 
