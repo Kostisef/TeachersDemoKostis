@@ -3,8 +3,11 @@
     <!--Roles-->
     <div class="container">
         <div class="table-header">
-
             <h3 th:text="'Roles List (Total records: ' + ${roleList.size()} + ')'"></h3>
+            <div>
+                <label for="roleTableSearch">Search Role: </label>
+                <input class="search-field-input" type="text" id="roleTableSearch" placeholder="Search Role by any field..." onkeyup="searchRoles()">
+            </div>
             <button title="Add new Role" type="button"
                     onclick="openModal('addRoleModal')"> Add Role
                 <i class="fa-solid fa-plus"></i>
@@ -22,15 +25,15 @@
                 </thead>
                 <tbody th:if="${#lists.isEmpty(roleList)}" class="table-body">
                 <tr>
-                    <td colspan="9">No records found</td>
+                    <td colspan="4">No records found</td>
                 </tr>
                 </tbody>
-                <tbody th:if="${not #lists.isEmpty(roleList)}">
+                <tbody th:if="${not #lists.isEmpty(roleList)}" id="roleTableBody">
                 <tr th:each="role : ${roleList}">
                     <td th:text="${role.id}"></td>
                     <td th:text="${role.name}"></td>
                     <td th:text="${role.description}"></td>
-                    <td style="text-align: center;">
+                    <td class="actionColumn">
                         <button title="Edit Role" th:data-id="${role.id}" type="button"
                                 onclick="openEditRoleModal(this.getAttribute('data-id'))">
                             <i class="fa-solid fa-pen"></i>

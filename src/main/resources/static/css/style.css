@@ -5,7 +5,7 @@ body {
     width: 70%;
     margin: 0 auto;
     border: 1px solid #443c3c;
-    background-color: darkgray;
+    background-color: #e3dfdf;
 }
 
 .container {
@@ -184,3 +184,19 @@ h3, button {
     border: 3px solid #00c7e3;
 }
 
+.search-field-input{
+    margin: 0!important;
+    width: 260px;
+    border: 1px solid;
+    border-radius: 20px;
+    background-color: #e3dfdf;
+}
+
+.actionColumn{
+    width: 13%;
+    text-align: center;
+}
+
+.actionColumn button{
+    margin: 0 2px;
+}

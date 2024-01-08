@@ -1,6 +1,5 @@
 package com.kostis.teachersdemo.service;
 
-import com.kostis.teachersdemo.entities.Course;
 import com.kostis.teachersdemo.entities.Role;
 import com.kostis.teachersdemo.models.RoleModel;
 
@@ -10,10 +9,11 @@ public interface IRoleService {
 
     List<Role> getAllRoles();
 
-
     Role getRoleById(Integer id);
 
     void saveRole(Role role) throws Exception;
 
     void addNewRole(RoleModel role) throws Exception;
+
+    List<Role> customSearchRoles(String searchValue);
 }

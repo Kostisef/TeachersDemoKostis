@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 public class StudentController {
 
@@ -125,6 +127,12 @@ public class StudentController {
         }
 
         return MAIN_URL;
+    }
+
+    @RequestMapping("/searchStudents")
+    @ResponseBody
+    public List<StudentModel> searchStudentModels(String searchValue) {
+        return userService.customSearchStudents(searchValue);
     }
 
 }

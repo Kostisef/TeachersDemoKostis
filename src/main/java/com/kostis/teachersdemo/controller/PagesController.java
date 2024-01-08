@@ -1,6 +1,5 @@
 package com.kostis.teachersdemo.controller;
 
-import com.kostis.teachersdemo.security.CustomUserDetails;
 import com.kostis.teachersdemo.service.impl.CourseServiceImpl;
 import com.kostis.teachersdemo.service.impl.RoleServiceImpl;
 import com.kostis.teachersdemo.service.impl.UserServiceImpl;

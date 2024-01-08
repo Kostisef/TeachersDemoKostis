@@ -3,7 +3,6 @@ package com.kostis.teachersdemo.service.impl;
 import com.kostis.teachersdemo.entities.Role;
 import com.kostis.teachersdemo.models.RoleModel;
 import com.kostis.teachersdemo.repo.RoleRepository;
-import com.kostis.teachersdemo.service.DTOService;
 import com.kostis.teachersdemo.service.IRoleService;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +12,9 @@ import java.util.List;
 public class RoleServiceImpl implements IRoleService {
 
     private final RoleRepository roleRepository;
-    private final DTOService dtoService;
+    private final DTOServiceImpl dtoService;
 
-    public RoleServiceImpl(RoleRepository roleRepository, DTOService dtoService) {
+    public RoleServiceImpl(RoleRepository roleRepository, DTOServiceImpl dtoService) {
         this.roleRepository = roleRepository;
         this.dtoService = dtoService;
     }
@@ -52,5 +51,11 @@ public class RoleServiceImpl implements IRoleService {
         } else {
             throw new Exception("Null incoming role to update.");
         }
+    }
+
+    @Override
+    public List<Role> customSearchRoles(String searchValue) {
+        searchValue = "%" + searchValue + "%";
+        return roleRepository.findRolesWithCustomSearch(searchValue);
     }
 }

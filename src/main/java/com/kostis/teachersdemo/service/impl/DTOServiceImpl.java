@@ -1,4 +1,4 @@
-package com.kostis.teachersdemo.service;
+package com.kostis.teachersdemo.service.impl;
 
 import com.kostis.teachersdemo.entities.Course;
 import com.kostis.teachersdemo.entities.Role;
@@ -10,18 +10,19 @@ import com.kostis.teachersdemo.models.StudentModel;
 import com.kostis.teachersdemo.models.TeacherModel;
 import com.kostis.teachersdemo.repo.CourseRepository;
 import com.kostis.teachersdemo.repo.RoleRepository;
+import com.kostis.teachersdemo.service.IDTOService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class DTOService {
+public class DTOServiceImpl implements IDTOService {
 
     private final RoleRepository roleRepository;
     private final CourseRepository courseRepository;
 
-    public DTOService(RoleRepository roleRepository, CourseRepository courseRepository) {
+    public DTOServiceImpl(RoleRepository roleRepository, CourseRepository courseRepository) {
         this.roleRepository = roleRepository;
         this.courseRepository = courseRepository;
     }
@@ -29,6 +30,7 @@ public class DTOService {
     /**
      * Entity: User [Teacher] --> DTO: TeacherModel
      */
+    @Override
     public TeacherModel convertUserToTeacherModel(User teacher){
         TeacherModel model = new TeacherModel();
 
@@ -38,6 +40,7 @@ public class DTOService {
         model.setFullName(teacher.getLastname() + " " + teacher.getFirstname());
         model.setUsername(teacher.getUsername());
         model.setStartYear(teacher.getStartYear());
+        model.setEmail(teacher.getEmail());
         model.setTeachingCourseModelList(convertCourseListToModelList(teacher.getTaughtCourses()));
 
         return model;
@@ -46,6 +49,7 @@ public class DTOService {
     /**
      * Entity: User [Student] --> DTO: StudentModel
      */
+    @Override
     public StudentModel convertUserToStudentModel(User student){
         StudentModel model = new StudentModel();
 
@@ -56,6 +60,7 @@ public class DTOService {
         model.setUsername(student.getUsername());
         model.setStartYear(student.getStartYear());
         model.setSemester(student.getSemester());
+        model.setEmail(student.getEmail());
 
         model.setCourseModelList(populateCourseModelList(student));
         model.setNotAttendingCourseModelList(populateNotAttendingCourses(model));
@@ -63,7 +68,8 @@ public class DTOService {
         return model;
     }
 
-    private List<CourseModel> populateCourseModelList(User student) {
+    @Override
+    public List<CourseModel> populateCourseModelList(User student) {
         List<CourseModel> courseModels = new ArrayList<>();
         for (StudentCourseAssociation association: student.getEnrolledCourses()){
             courseModels.add(convertCourseToModel(association.getCourse()));
@@ -71,7 +77,8 @@ public class DTOService {
         return courseModels;
     }
 
-    private List<CourseModel> populateNotAttendingCourses(StudentModel studentModel){
+    @Override
+    public List<CourseModel> populateNotAttendingCourses(StudentModel studentModel){
         List<Course> allCourses = courseRepository.findAll();
         List<CourseModel> notAttendingCourseModels = new ArrayList<>();
 
@@ -94,6 +101,7 @@ public class DTOService {
     /**
      * DTO: TeacherModel --> Entity: User [Teacher]
      */
+    @Override
     public User convertTeacherModelToUser(TeacherModel model){
         User user = new User();
 
@@ -115,6 +123,7 @@ public class DTOService {
     /**
      * DTO: TeacherModel --> Entity: User [Teacher]
      */
+    @Override
     public User convertStudentModelToUser(StudentModel model){
         User user = new User();
 
@@ -136,6 +145,7 @@ public class DTOService {
     /**
      * Entity: Course --> DTO: CourseModel
      */
+    @Override
     public CourseModel convertCourseToModel(Course course){
         CourseModel model = new CourseModel();
 
@@ -163,6 +173,7 @@ public class DTOService {
     /**
      * DTO: CourseModel --> Entity: Course
      */
+    @Override
     public Course convertModelToCourse(CourseModel model){
         Course course = new Course();
 
@@ -180,6 +191,7 @@ public class DTOService {
     /**
      * Entity: List<Course> --> DTO: List<CourseModel>
      */
+    @Override
     public List<CourseModel> convertCourseListToModelList(List<Course> courseList){
         List<CourseModel> modelList = new ArrayList<>();
 
@@ -194,15 +206,9 @@ public class DTOService {
 
 
     /**
-     * Entity: Role --> DTO: RoleModel
-     */
-    public RoleModel convertRoleToModel(Role role) {
-        return new RoleModel(role.getName(), role.getDescription());
-    }
-
-    /**
      * DTO: RoleModel --> Entity: Role
      */
+    @Override
     public Role convertModelToRole(RoleModel model) {
         Role role = new Role();
         role.setName(model.getName());

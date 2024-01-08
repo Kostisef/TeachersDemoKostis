@@ -2,14 +2,14 @@ package com.kostis.teachersdemo.controller;
 
 import com.kostis.teachersdemo.entities.Role;
 import com.kostis.teachersdemo.models.RoleModel;
-import com.kostis.teachersdemo.repo.RoleRepository;
 import com.kostis.teachersdemo.service.impl.RoleServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 public class RoleController {
@@ -61,5 +61,11 @@ public class RoleController {
 
 
         return MAIN_URL;
+    }
+
+    @RequestMapping("/searchRoles")
+    @ResponseBody
+    public List<Role> searchRoles(String searchValue) {
+        return roleService.customSearchRoles(searchValue);
     }
 }

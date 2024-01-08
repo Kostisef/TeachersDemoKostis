@@ -1,38 +1,30 @@
 package com.kostis.teachersdemo.service.impl;
 
 import com.kostis.teachersdemo.entities.Course;
-import com.kostis.teachersdemo.entities.StudentCourseAssociation;
 import com.kostis.teachersdemo.entities.User;
-import com.kostis.teachersdemo.models.CourseModel;
 import com.kostis.teachersdemo.models.StudentModel;
 import com.kostis.teachersdemo.models.TeacherModel;
 import com.kostis.teachersdemo.repo.CourseRepository;
-import com.kostis.teachersdemo.repo.RoleRepository;
 import com.kostis.teachersdemo.repo.StudentCourseAssociationRepository;
 import com.kostis.teachersdemo.repo.UserRepository;
-import com.kostis.teachersdemo.service.DTOService;
 import com.kostis.teachersdemo.service.IUserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements IUserService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-
     private final CourseRepository courseRepository;
     private final StudentCourseAssociationRepository studentCourseAssociationRepository;
 
-    private final DTOService dtoService;
+    private final DTOServiceImpl dtoService;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, CourseRepository courseRepository, StudentCourseAssociationRepository studentCourseAssociationRepository, DTOService dtoService) {
+    public UserServiceImpl(UserRepository userRepository, CourseRepository courseRepository, StudentCourseAssociationRepository studentCourseAssociationRepository, DTOServiceImpl dtoService) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
         this.courseRepository = courseRepository;
         this.studentCourseAssociationRepository = studentCourseAssociationRepository;
         this.dtoService = dtoService;
@@ -107,7 +99,7 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
-
+    @Override
     public void deleteTeacher(TeacherModel teacher){
         User teacherToDelete = getUserById(teacher.getId());
         for (Course course : teacherToDelete.getTaughtCourses()){
@@ -117,6 +109,7 @@ public class UserServiceImpl implements IUserService {
         userRepository.delete(teacherToDelete);
     }
 
+    @Override
     public void deleteStudent(StudentModel student){
         User studentToDelete = getUserById(student.getId());
 
@@ -155,6 +148,33 @@ public class UserServiceImpl implements IUserService {
             return dtoService.convertUserToStudentModel(userFound);
         }
         return null;
+    }
+
+    @Override
+    public List<TeacherModel> customSearchTeachers(String searchValue) {
+        searchValue = "%" + searchValue + "%";
+        List<User> userList = userRepository.findTeachersWithCustomSearch(searchValue);
+
+        List<TeacherModel> teacherModelList = new ArrayList<>();
+        for (User user: userList){
+            teacherModelList.add(dtoService.convertUserToTeacherModel(user));
+        }
+
+        return teacherModelList;
+    }
+
+
+    @Override
+    public List<StudentModel> customSearchStudents(String searchValue) {
+        searchValue = "%" + searchValue + "%";
+        List<User> userList = userRepository.findStudentsWithCustomSearch(searchValue);
+
+        List<StudentModel> studentModelList = new ArrayList<>();
+        for (User user: userList){
+            studentModelList.add(dtoService.convertUserToStudentModel(user));
+        }
+
+        return studentModelList;
     }
 
     private String bCryptRawPassword(String rawPass){

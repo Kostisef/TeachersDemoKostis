@@ -2,12 +2,14 @@ package com.kostis.teachersdemo.controller;
 
 import com.kostis.teachersdemo.entities.User;
 import com.kostis.teachersdemo.models.TeacherModel;
-import com.kostis.teachersdemo.service.DTOService;
+import com.kostis.teachersdemo.service.impl.DTOServiceImpl;
 import com.kostis.teachersdemo.service.impl.CourseServiceImpl;
 import com.kostis.teachersdemo.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 
 @Controller
@@ -18,10 +20,10 @@ public class TeacherController {
     private final UserServiceImpl userService;
     private final CourseServiceImpl courseService;
 
-    private final DTOService dtoService;
+    private final DTOServiceImpl dtoService;
 
 
-    public TeacherController(UserServiceImpl userService, CourseServiceImpl courseService, DTOService dtoService) {
+    public TeacherController(UserServiceImpl userService, CourseServiceImpl courseService, DTOServiceImpl dtoService) {
         this.userService = userService;
         this.courseService = courseService;
         this.dtoService = dtoService;
@@ -131,6 +133,13 @@ public class TeacherController {
         }
 
         return MAIN_URL;
+    }
+
+
+    @RequestMapping("/searchTeachers")
+    @ResponseBody
+    public List<TeacherModel> searchTeacherModels(String searchValue) {
+        return userService.customSearchTeachers(searchValue);
     }
 
 }

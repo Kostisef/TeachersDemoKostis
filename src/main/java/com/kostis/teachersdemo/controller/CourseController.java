@@ -2,15 +2,15 @@ package com.kostis.teachersdemo.controller;
 
 import com.kostis.teachersdemo.entities.Course;
 import com.kostis.teachersdemo.models.CourseModel;
-import com.kostis.teachersdemo.repo.CourseRepository;
-import com.kostis.teachersdemo.service.DTOService;
+import com.kostis.teachersdemo.service.impl.DTOServiceImpl;
 import com.kostis.teachersdemo.service.impl.CourseServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 public class CourseController {
@@ -18,9 +18,9 @@ public class CourseController {
     private static final String MAIN_URL = "redirect:/dashboard";
 
     private final CourseServiceImpl courseService;
-    private final DTOService dtoService;
+    private final DTOServiceImpl dtoService;
 
-    public CourseController(CourseServiceImpl courseService, DTOService dtoService) {
+    public CourseController(CourseServiceImpl courseService, DTOServiceImpl dtoService) {
         this.courseService = courseService;
         this.dtoService = dtoService;
     }
@@ -81,5 +81,11 @@ public class CourseController {
         }
 
         return MAIN_URL;
+    }
+
+    @RequestMapping("/searchCourses")
+    @ResponseBody
+    public List<CourseModel> searchCourses(String searchValue) {
+        return courseService.customSearchCourses(searchValue);
     }
 }

@@ -7,9 +7,7 @@ import com.kostis.teachersdemo.models.CourseModel;
 import com.kostis.teachersdemo.repo.CourseRepository;
 import com.kostis.teachersdemo.repo.StudentCourseAssociationRepository;
 import com.kostis.teachersdemo.repo.UserRepository;
-import com.kostis.teachersdemo.service.DTOService;
 import com.kostis.teachersdemo.service.ICourseService;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,11 +19,11 @@ public class CourseServiceImpl implements ICourseService {
     private final CourseRepository courseRepository;
     private final StudentCourseAssociationRepository associationRepository;
     private final UserRepository userRepository;
-    private final DTOService dtoService;
+    private final DTOServiceImpl dtoService;
 
     private final StudentCourseAssociationRepository studentCourseAssociationRepository;
 
-    public CourseServiceImpl(CourseRepository courseRepository, StudentCourseAssociationRepository associationRepository, UserRepository userRepository, DTOService dtoService, StudentCourseAssociationRepository studentCourseAssociationRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, StudentCourseAssociationRepository associationRepository, UserRepository userRepository, DTOServiceImpl dtoService, StudentCourseAssociationRepository studentCourseAssociationRepository) {
         this.courseRepository = courseRepository;
         this.associationRepository = associationRepository;
         this.userRepository = userRepository;
@@ -40,12 +38,12 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public Course getCourseById(Integer id) {
-        return courseRepository.findById(id);
+        return courseRepository.findById(id).orElse(null);
     }
 
     @Override
     public void saveCourse(CourseModel course) throws Exception {
-        Course courseToUpdate = courseRepository.findById(course.getId());
+        Course courseToUpdate = courseRepository.findById(course.getId()).orElse(null);
 
         if (courseToUpdate!=null){
             courseToUpdate.setName(course.getName());
@@ -144,8 +142,14 @@ public class CourseServiceImpl implements ICourseService {
         } else {
             throw new Exception("Error at addCourseToStudent(). Cannot find course or student record at db.");
         }
+    }
 
+    @Override
+    public List<CourseModel> customSearchCourses(String searchValue) {
+        searchValue = "%" + searchValue + "%";
+        List<Course> courseList = courseRepository.findCoursesWithCustomSearch(searchValue);
 
+        return dtoService.convertCourseListToModelList(courseList);
     }
 
     @Override
@@ -158,7 +162,6 @@ public class CourseServiceImpl implements ICourseService {
         }
 
         return dtoService.convertCourseListToModelList(courseList);
-
     }
 
 }

@@ -1,7 +1,6 @@
 package com.kostis.teachersdemo.service;
 
 import com.kostis.teachersdemo.entities.Course;
-import com.kostis.teachersdemo.entities.User;
 import com.kostis.teachersdemo.models.CourseModel;
 
 import java.util.List;
@@ -27,4 +26,6 @@ public interface ICourseService {
     void removeCourseFromStudent(Integer selectedStudentId, Integer selectedCourseId) throws Exception;
 
     void addCourseToStudent(Integer selectedStudentId, Integer selectedCourseId) throws Exception;
+
+    List<CourseModel> customSearchCourses(String searchValue);
 }
