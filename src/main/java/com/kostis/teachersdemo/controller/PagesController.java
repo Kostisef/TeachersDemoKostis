@@ -30,10 +30,8 @@ public class PagesController {
 
     @GetMapping("/login")
     public String loginAction(RedirectAttributes redirectAttributes) {
-        System.out.println("Inside here!!!!");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication!=null && !(authentication instanceof AnonymousAuthenticationToken)) {
-
             return "redirect:/dashboard";
         }
 
@@ -48,9 +46,9 @@ public class PagesController {
             model.addAttribute("welcomeMsg", welcomeMsg);
             session.removeAttribute("welcomeMsg");
         }
+
         model.addAttribute("teacherList", userService.getAllTeacherModels());
         model.addAttribute("teachingCoursesList", Collections.emptyList());
-
         model.addAttribute("studentList", userService.getAllStudentModels());
         model.addAttribute("roleList", roleService.getAllRoles());
         model.addAttribute("courseList", courseService.getAllCourseModels());

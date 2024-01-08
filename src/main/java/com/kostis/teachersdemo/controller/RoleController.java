@@ -47,7 +47,7 @@ public class RoleController {
 
     @PostMapping("/saveRole")
     public String saveRole(Role selectedRole, RedirectAttributes redirectAttributes) {
-        System.out.println("RoleId to update: "+ selectedRole.getId());
+//        System.out.println("RoleId to update: "+ selectedRole.getId());
         String growlMsg = "Role updated successfully";
 
         try{
@@ -58,7 +58,6 @@ public class RoleController {
             growlMsg = "Failed to update Role... Exception message: "+e.getMessage();
             redirectAttributes.addFlashAttribute("errorMessage", growlMsg);
         }
-
 
         return MAIN_URL;
     }

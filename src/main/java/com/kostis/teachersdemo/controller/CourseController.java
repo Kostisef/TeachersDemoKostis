@@ -52,8 +52,7 @@ public class CourseController {
 
     @PostMapping("/deleteCourse")
     public String deleteCourse(CourseModel courseIncoming, RedirectAttributes redirectAttributes){
-        System.out.println("CourseId to delete: "+ courseIncoming.getId());
-
+//        System.out.println("CourseId to delete: "+ courseIncoming.getId());
         String growlMsg = "Course deleted successfully";
         try{
             courseService.deleteCourse(courseIncoming);
@@ -69,7 +68,7 @@ public class CourseController {
 
     @PostMapping("/saveCourse")
     public String saveCourse(CourseModel selectedCourse, RedirectAttributes redirectAttributes) {
-        System.out.println("CourseId to update: "+ selectedCourse.getId());
+//        System.out.println("CourseId to update: "+ selectedCourse.getId());
         String growlMsg = "Course updated successfully";
         try{
             courseService.saveCourse(selectedCourse);

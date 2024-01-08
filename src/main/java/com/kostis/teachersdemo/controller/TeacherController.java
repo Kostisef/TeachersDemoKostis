@@ -19,7 +19,6 @@ public class TeacherController {
 
     private final UserServiceImpl userService;
     private final CourseServiceImpl courseService;
-
     private final DTOServiceImpl dtoService;
 
 
@@ -47,7 +46,6 @@ public class TeacherController {
 
     @PostMapping("/addNewTeacher")
     public String addNewTeacher(TeacherModel teacher, @RequestParam("password") String rawPassword, RedirectAttributes redirectAttributes){
-
         String growlMsg = "Teacher created successfully";
         try{
             userService.createNewTeacher(teacher, rawPassword);
@@ -63,7 +61,7 @@ public class TeacherController {
 
     @PostMapping("/deleteTeacher")
     public String deleteTeacher(TeacherModel teacherIncoming, RedirectAttributes redirectAttributes){
-        System.out.println("TeacherId to delete: "+ teacherIncoming.getId());
+//        System.out.println("TeacherId to delete: "+ teacherIncoming.getId());
         String growlMsg = "Teacher deleted successfully";
         try{
             userService.deleteTeacher(teacherIncoming);
@@ -79,7 +77,7 @@ public class TeacherController {
 
     @PostMapping("/saveTeacher")
     public String saveTeacher(TeacherModel selectedTeacher, RedirectAttributes redirectAttributes) {
-        System.out.println("TeacherId to update: "+ selectedTeacher.getId());
+//        System.out.println("TeacherId to update: "+ selectedTeacher.getId());
         String growlMsg = "Teacher updated successfully";
 
         try{
@@ -98,8 +96,8 @@ public class TeacherController {
     public String removeTeachingCourse(@RequestParam("selectedTeacher.id") Integer selectedTeacherId,
                                      @RequestParam("selectedCourse.id") Integer selectedCourseId,
                                      RedirectAttributes redirectAttributes) {
-        System.out.println("TeacherId to use: "+ selectedTeacherId);
-        System.out.println("CourseId to use: "+ selectedCourseId);
+//        System.out.println("TeacherId to use: "+ selectedTeacherId);
+//        System.out.println("CourseId to use: "+ selectedCourseId);
         String growlMsg = "Course removed from Teacher successfully";
 
         try{
@@ -119,8 +117,8 @@ public class TeacherController {
     public String addTeachingCourse(@RequestParam("selectedTeacher.id") Integer selectedTeacherId,
                                        @RequestParam("selectedCourse.id") Integer selectedCourseId,
                                        RedirectAttributes redirectAttributes) {
-        System.out.println("TeacherId to use: "+ selectedTeacherId);
-        System.out.println("CourseId to use: "+ selectedCourseId);
+//        System.out.println("TeacherId to use: "+ selectedTeacherId);
+//        System.out.println("CourseId to use: "+ selectedCourseId);
         String growlMsg = "Course added to Teacher successfully";
 
         try{

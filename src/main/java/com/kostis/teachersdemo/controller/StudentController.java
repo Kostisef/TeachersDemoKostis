@@ -53,7 +53,7 @@ public class StudentController {
 
     @PostMapping("/deleteStudent")
     public String deleteStudent(StudentModel studentIncoming, RedirectAttributes redirectAttributes){
-        System.out.println("StudentId to delete: "+ studentIncoming.getId());
+//        System.out.println("StudentId to delete: "+ studentIncoming.getId());
         String growlMsg = "Student deleted successfully";
 
         try{
@@ -71,7 +71,7 @@ public class StudentController {
 
     @PostMapping("/saveStudent")
     public String saveStudent(StudentModel selectedStudent, RedirectAttributes redirectAttributes) {
-        System.out.println("StudentId to update: "+ selectedStudent.getId());
+//        System.out.println("StudentId to update: "+ selectedStudent.getId());
         String growlMsg = "Student updated successfully";
 
         try{
@@ -83,8 +83,6 @@ public class StudentController {
             redirectAttributes.addFlashAttribute("errorMessage", growlMsg);
         }
 
-
-
         return MAIN_URL;
     }
 
@@ -93,8 +91,8 @@ public class StudentController {
     public String removeEnrolledCourse(@RequestParam("selectedStudent.id") Integer selectedStudentId,
                                        @RequestParam("selectedCourse.id") Integer selectedCourseId,
                                        RedirectAttributes redirectAttributes) {
-        System.out.println("StudentId to use: "+ selectedStudentId);
-        System.out.println("CourseId to use: "+ selectedCourseId);
+//        System.out.println("StudentId to use: "+ selectedStudentId);
+//        System.out.println("CourseId to use: "+ selectedCourseId);
         String growlMsg = "Course removed from Student successfully";
 
         try{
@@ -113,8 +111,8 @@ public class StudentController {
     public String addEnrolledCourse(@RequestParam("selectedStudent.id") Integer selectedStudentId,
                                        @RequestParam("selectedCourse.id") Integer selectedCourseId,
                                        RedirectAttributes redirectAttributes) {
-        System.out.println("StudentId to use: "+ selectedStudentId);
-        System.out.println("CourseId to use: "+ selectedCourseId);
+//        System.out.println("StudentId to use: "+ selectedStudentId);
+//        System.out.println("CourseId to use: "+ selectedCourseId);
         String growlMsg = "Course added to Student successfully";
 
         try{
