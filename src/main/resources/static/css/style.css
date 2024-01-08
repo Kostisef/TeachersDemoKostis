@@ -200,3 +200,10 @@ h3, button {
 .actionColumn button{
     margin: 0 2px;
 }
+
+.resizable{
+    resize: vertical;
+    overflow: hidden;
+    min-height: 100px;
+    max-height: 200px;
+}
