@@ -2,9 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" th:href="@{/css/error.css}"/>
+    <link rel="shortcut icon" th:href="@{/images/favicon.png}" sizes = "48x48" type="image/x-icon">
     <title>TeachersDemoKostis 500</title>
 </head>
 <body>
-    <h1>TeachersDemoKostis 500</h1>
+<div class="error-container">
+    <h1>TeachersDemoKostis</h1>
+    <h3>Error 500 - Server Error</h3>
+    <a href="/teachersDemoKostis/dashboard" class="return-to-dashboard-button" title="Return to Dashboard"> Home
+        <i class="fa-solid fa-house-laptop return-to-dashboard"></i>
+    </a>
+</div>
 </body>
+</html>
 </html>

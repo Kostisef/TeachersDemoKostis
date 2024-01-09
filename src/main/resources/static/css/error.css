@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e3dfdf;
+    font-size: 60px;
+    text-align: center;
+}
+
+.error-container h1{
+    margin-bottom: 5px;
+}
+
+.error-container h3{
+    margin-top: 5px;
+    margin-bottom: 30px;
+}
+
+
+a.return-to-dashboard-button {
+    background-color: #008ead;
+    color: white;
+    text-decoration: none;
+    border: 3px solid black;
+    border-radius: 15px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin-right: 7px;
+    text-align: center;
+    width: 95px;
+}
+
+a.return-to-dashboard-button span {
+    max-width: 85px; /* Adjust the max-width as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+a.return-to-dashboard-button i {
+    margin-left: 5px;
+}
+
+a.return-to-dashboard-button:hover{
+    background-color: #00c7e3;
+}

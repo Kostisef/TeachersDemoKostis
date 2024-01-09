@@ -29,7 +29,7 @@ public class PagesController {
 
 
     @GetMapping("/login")
-    public String loginAction(RedirectAttributes redirectAttributes) {
+    public String loginAction() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication!=null && !(authentication instanceof AnonymousAuthenticationToken)) {
             return "redirect:/dashboard";
