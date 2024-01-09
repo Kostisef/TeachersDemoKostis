@@ -2,11 +2,11 @@
 <a href="https://github.com/Kostisef/TeachersDemoKostis" target="_blank">
     <img src="https://github.com/devicons/devicon/blob/master/icons/github/github-original-wordmark.svg" title="TeachersDemoKostis GitHub Repo" alt="TeachersDemoKostis GitHub Repo" width="70" height="70"/>
   </a>
-
+  
 ## (1) Τεχνολογίες που χρησιμοποιήθηκαν: </h2>
-- <b>Back-end: </b> Spring MVC, Spring Security
-- <b>Front-end: </b> Thymeleaf, HTML, CSS, JS, JQuery
-- <b>Database: </b> H2 (in Memory SQL DB)
+- **Back-end:** Spring Boot (v2.6.3), Spring MVC, Spring Security, Java SE 11
+- **Front-end:** Thymeleaf (v3.0.12), HTML, CSS, JS, JQuery
+- **Database:** H2 (in Memory SQL DB)
 
 
 ## (2) Λεπτομέρειες βάσης δεδομένων</h2>
@@ -22,9 +22,13 @@
 | Password      | root                   |
 
 
-<div>Χρησιμοποιήθηκε ως βάση η H2, έτσι ώστε να μπορεί να εκτελεστεί η εφαρμογή, χωρίς την ανάγκη ύπαρξης προγράμματος MySQL.
-Μετά από κάθε εκτέλεση του προγράμματος, το σχήμα καταστρέφεται και δημιουργείται ξανά (spring.jpa.hibernate.ddl-auto=create-drop), στο οποίο φορτώνονται και ορισμένα
+<div>Χρησιμοποιήθηκε ως βάση η H2, έτσι ώστε να μπορεί να εκτελεστεί η εφαρμογή, χωρίς την ανάγκη ύπαρξης διαχειριστικού προγράμματος MySQL.
+Μετά από κάθε εκτέλεση του προγράμματος, το σχήμα καταστρέφεται και δημιουργείται ξανά, στο οποίο φορτώνονται και ορισμένα
 αρχικά δεδομένα του αρχείου <span style="font-style: italic">"/resources/data.sql"</span>.</div>
+
+```xml
+spring.jpa.hibernate.ddl-auto=create-drop
+```
 
 ## (3) Ανάλυση Οντοτήτων Σχήματος
 - **User:** Περιέχει τις πληροφορίες του χρήστη και διαχωρίζονται (έχουν τιμή **null**) τα διαφορετικά χαρακτηριστικά (_attributes_) ανά ρόλο χρήστη:
@@ -47,6 +51,10 @@
   - Error 404 &rArr; <span style="font-style: italic; color: #00c7e3">/error-404</span>
   - Error 500 &rArr; <span style="font-style: italic; color: #00c7e3">/error-500</span>
   - Αντί του κλασσικού Whitelabel Error Page για τα generic error &rArr; <span style="font-style: italic; color: #00c7e3">/error</span>
+
+
+> Σημείωση: Όλα τα setters/getters έχουν υλοποιηθεί με τη βιβλιοθήκη **_lombok_**.
+
 
 ## (5) Λειτουργίες που <span style="text-decoration: underline;">ΔΕΝ</span> υποστηρίζονται</h2>
 
