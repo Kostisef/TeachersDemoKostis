@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface IRoleService {
 
-    List<Role> getAllRoles();
+    List<RoleModel> getAllRoleModels();
 
-    Role getRoleById(Integer id);
+    RoleModel getRoleModelById(Integer id);
 
-    void saveRole(Role role) throws Exception;
+    void saveRole(RoleModel role) throws Exception;
 
     void addNewRole(RoleModel role) throws Exception;
 
-    List<Role> customSearchRoles(String searchValue);
+    List<RoleModel> customSearchRoles(String searchValue);
 }

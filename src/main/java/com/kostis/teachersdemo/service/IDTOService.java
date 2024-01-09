@@ -30,4 +30,6 @@ public interface IDTOService {
     List<CourseModel> convertCourseListToModelList(List<Course> courseList);
 
     Role convertModelToRole(RoleModel model);
+
+    RoleModel convertRoleToModel(Role role);
 }

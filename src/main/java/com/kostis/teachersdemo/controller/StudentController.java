@@ -23,12 +23,6 @@ public class StudentController {
         this.courseService = courseService;
     }
 
-    @RequestMapping("/getStudent")
-    @ResponseBody
-    public User getStudent(Integer id) {
-        return userService.getUserById(id);
-    }
-
     @RequestMapping("/getStudentModel")
     @ResponseBody
     public StudentModel getStudentModel(Integer id) {

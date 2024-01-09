@@ -6,6 +6,7 @@ import com.kostis.teachersdemo.repo.RoleRepository;
 import com.kostis.teachersdemo.service.IRoleService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,22 +21,35 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public List<Role> getAllRoles() {
-        return roleRepository.findAll();
+    public List<RoleModel> getAllRoleModels() {
+        List<Role> roleList = roleRepository.findAll();
+
+        List<RoleModel> roleModels = new ArrayList<>();
+        for (Role role: roleList){
+            roleModels.add(dtoService.convertRoleToModel(role));
+        }
+        return roleModels;
     }
 
 
     @Override
-    public Role getRoleById(Integer id) {
-        return roleRepository.findById(id).orElse(null);
+    public RoleModel getRoleModelById(Integer id) {
+        Role roleFound = roleRepository.findById(id).orElse(null);
+
+        RoleModel roleModel = null;
+        if (roleFound != null){
+            roleModel = dtoService.convertRoleToModel(roleFound);
+        }
+
+        return roleModel;
     }
 
     @Override
-    public void saveRole(Role role) throws Exception {
-        Role roleToUpdate = roleRepository.findById(role.getId()).orElse(null);
+    public void saveRole(RoleModel roleModel) throws Exception {
+        Role roleToUpdate = roleRepository.findById(roleModel.getId()).orElse(null);
         System.out.println();
         if (roleToUpdate != null){
-            roleToUpdate.setDescription(role.getDescription());
+            roleToUpdate.setDescription(roleModel.getDescription());
             roleRepository.save(roleToUpdate);
         } else {
             throw new Exception("Null incoming role to update.");
@@ -54,8 +68,15 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public List<Role> customSearchRoles(String searchValue) {
+    public List<RoleModel> customSearchRoles(String searchValue) {
         searchValue = "%" + searchValue + "%";
-        return roleRepository.findRolesWithCustomSearch(searchValue);
+        List<Role> roleList = roleRepository.findRolesWithCustomSearch(searchValue);
+
+        List<RoleModel> roleModelList = new ArrayList<>();
+        for (Role role: roleList){
+            roleModelList.add(dtoService.convertRoleToModel(role));
+        }
+
+        return roleModelList;
     }
 }

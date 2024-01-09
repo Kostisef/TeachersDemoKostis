@@ -2,13 +2,12 @@
 function openEditTeacherModal(teacherId){
 
     $.ajax({
-        url: '/teachersDemoKostis/getTeacher?id='+teacherId,
+        url: '/teachersDemoKostis/getTeacherModel?id='+teacherId,
         type: 'GET',
         dataType: 'json',
         success: function(teacher) {
 
             $('#mdl-edit-teacher-id').val(teacher.id);
-            // $('#mdl-edit-teacher-id2').val(teacher.id);
             $('#mdl-edit-teacher-firstname').val(teacher.firstname);
             $('#mdl-edit-teacher-lastname').val(teacher.lastname);
             $('#mdl-edit-teacher-username').val(teacher.username);
@@ -26,7 +25,7 @@ function openEditTeacherModal(teacherId){
 // MODAL: DELETE TEACHER
 function openDeleteTeacherModal(teacherId){
     $.ajax({
-        url: '/teachersDemoKostis/getTeacher?id='+teacherId,
+        url: '/teachersDemoKostis/getTeacherModel?id='+teacherId,
         type: 'GET',
         dataType: 'json',
         success: function(teacher) {
@@ -43,17 +42,16 @@ function openDeleteTeacherModal(teacherId){
 function openShowTeachingCoursesModal(teacherId){
 
     $.ajax({
-        url: '/teachersDemoKostis/getTeacher?id='+teacherId,
+        url: '/teachersDemoKostis/getTeacherModel?id='+teacherId,
         type: 'GET',
         dataType: 'json',
         success: function(teacher) {
-            console.log(teacher);
             $('#mdl-showTeachingCourse-teacher-id').val(teacher.id);
             // const fullName = teacher.lastname + " " + teacher.firstname;
-            $('#mdl-showTeachingCourse-teacher-fullName').text(teacher.lastname + " " + teacher.firstname);
+            $('#mdl-showTeachingCourse-teacher-fullName').text(teacher.fullName);
 
 
-            const teachingCourses = teacher.taughtCourses;
+            const teachingCourses = teacher.teachingCourseModelList;
             var myTableBody = $('#teachingCoursesTableBody');
             myTableBody.empty();
 
@@ -64,7 +62,7 @@ function openShowTeachingCoursesModal(teacherId){
                     '<td>' + course.name + '</td>' +
                     '<td>' + course.description + '</td>' +
                     '<td>' + course.semester + '</td>' +
-                    '<td>' + course.studentAssociations.length + '</td>' +
+                    '<td>' + course.numOfStudents + '</td>' +
                     '<td style="text-align: center;">' +
                     '<button title="Remove Teaching Course" data-id="' + course.id + '" type="button" ' +
                     'onclick="openDeleteTeachingCourseModal(' + teacher.id + ', ' + course.id + ')">' +
@@ -79,7 +77,7 @@ function openShowTeachingCoursesModal(teacherId){
                 $('#teachingCoursesTableBody').append('<tr><td colspan="6">No records found</td></tr>');
             }
 
-            $('#teacher-info').text("Teaching Courses (Teacher: "+ teacher.lastname + " " + teacher.firstname + ")");
+            $('#teacher-info').text("Teaching Courses (Teacher: "+ teacher.fullName + ")");
             $('#table-records-showTeachingRecords-info').text('Teaching Courses List (Total records: ' + teachingCourses.length + ')');
 
             openModal('showTeachingCoursesModal');
@@ -93,7 +91,7 @@ function openShowTeachingCoursesModal(teacherId){
 // MODAL: REMOVE COURSE FROM TEACHER
 function openDeleteTeachingCourseModal(teacherId, courseId){
     $.ajax({
-        url: '/teachersDemoKostis/getTeacher?id='+teacherId,
+        url: '/teachersDemoKostis/getTeacherModel?id='+teacherId,
         type: 'GET',
         dataType: 'json',
         success: function(teacher) {
@@ -114,7 +112,7 @@ function openDeleteTeachingCourseModal(teacherId, courseId){
 function openEditStudentModal(studentId){
 
     $.ajax({
-        url: '/teachersDemoKostis/getStudent?id='+studentId,
+        url: '/teachersDemoKostis/getStudentModel?id='+studentId,
         type: 'GET',
         dataType: 'json',
         success: function(student) {
@@ -137,7 +135,7 @@ function openEditStudentModal(studentId){
 // MODAL: DELETE STUDENT
 function openDeleteStudentModal(studentId){
     $.ajax({
-        url: '/teachersDemoKostis/getStudent?id='+studentId,
+        url: '/teachersDemoKostis/getStudentModel?id='+studentId,
         type: 'GET',
         dataType: 'json',
         success: function(student) {
@@ -194,7 +192,7 @@ function openDeleteCourseModal(courseId){
 function openEditRoleModal(roleId){
 
     $.ajax({
-        url: '/teachersDemoKostis/getRole?id='+roleId,
+        url: '/teachersDemoKostis/getRoleModel?id='+roleId,
         type: 'GET',
         dataType: 'json',
         success: function(role) {
@@ -213,9 +211,8 @@ function openEditRoleModal(roleId){
 // MODAL: ADD TEACHING COURSE TO TEACHER
 function openAddTeachingCourseModal(){
     const teacherId = $('#mdl-showTeachingCourse-teacher-id').prop('value');
-    console.log("Teacher ID: " + teacherId);
     $.ajax({
-        url: '/teachersDemoKostis/getTeacher?id='+teacherId,
+        url: '/teachersDemoKostis/getTeacherModel?id='+teacherId,
         type: 'GET',
         dataType: 'json',
         success: function(teacher) {
@@ -233,7 +230,6 @@ function openAddTeachingCourseModal(){
 // MODAL: ADD COURSE TO STUDENT
 function openAddEnrollCourseModal(){
     const studentId = $('#mdl-showEnrolledCourses-student-id').prop('value');
-    console.log("Student ID: " + studentId);
     $.ajax({
         url: '/teachersDemoKostis/getStudentModel?id='+studentId,
         type: 'GET',
@@ -296,15 +292,12 @@ function openEnrolledCoursesModal(studentId){
         type: 'GET',
         dataType: 'json',
         success: function(studentModel) {
-            // console.log("STUDENT MODEL BELOW");
-            // console.log(studentModel);
             $('#mdl-showEnrolledCourses-student-id').val(studentModel.id);
             // const fullName = student.lastname + " " + student.firstname;
             $('#mdl-showEnrolledCourses-student-fullName').text(studentModel.fullName);
 
 
             const enrolledCourses = studentModel.courseModelList;
-            // console.log(enrolledCourses);
             const myTableBody = $('#enrolledCoursesTableBody');
             myTableBody.empty();
 
@@ -407,7 +400,6 @@ function updateEnrolledCourseDetails() {
         type: 'GET',
         dataType: 'json',
         success: function(course) {
-            console.log(course);
             $('#mdl-addEnrolledCourse-selected-course-id').val(course.id);
             $('#mdl-addEnrolledCourse-course-name').val(course.name);
             $('#mdl-addEnrolledCourse-course-description').val(course.description);

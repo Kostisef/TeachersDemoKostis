@@ -28,12 +28,6 @@ public class TeacherController {
         this.dtoService = dtoService;
     }
 
-    @RequestMapping("/getTeacher")
-    @ResponseBody
-    public User getTeacher(Integer id) {
-        User teacherFound = userService.getUserById(id);
-        return teacherFound;
-    }
 
     @RequestMapping("/getTeacherModel")
     @ResponseBody

@@ -9,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
@@ -48,29 +47,12 @@ public class PagesController {
         }
 
         model.addAttribute("teacherList", userService.getAllTeacherModels());
-        model.addAttribute("teachingCoursesList", Collections.emptyList());
         model.addAttribute("studentList", userService.getAllStudentModels());
-        model.addAttribute("roleList", roleService.getAllRoles());
+        model.addAttribute("roleList", roleService.getAllRoleModels());
         model.addAttribute("courseList", courseService.getAllCourseModels());
         model.addAttribute("coursesWithoutTeacherList", courseService.getAllCoursesWithoutTeacher());
 
         return "/dashboard";
-    }
-
-
-    @GetMapping("/401")
-    public String redirectTo401(Model model) {
-        return "error-401";
-    }
-
-    @GetMapping("/404")
-    public String redirectTo404(Model model) {
-        return "error-404";
-    }
-
-    @GetMapping("/500")
-    public String redirectTo500(Model model) {
-        return "error-500";
     }
 
 }

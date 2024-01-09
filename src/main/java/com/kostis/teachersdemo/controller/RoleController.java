@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -21,10 +22,11 @@ public class RoleController {
         this.roleService = roleService;
     }
 
-    @RequestMapping("/getRole")
+
+    @RequestMapping("/getRoleModel")
     @ResponseBody
-    public Role getRole(Integer id) {
-        return roleService.getRoleById(id);
+    public RoleModel getRoleModel(Integer id) {
+        return roleService.getRoleModelById(id);
     }
 
 
@@ -46,7 +48,7 @@ public class RoleController {
 
 
     @PostMapping("/saveRole")
-    public String saveRole(Role selectedRole, RedirectAttributes redirectAttributes) {
+    public String saveRole(RoleModel selectedRole, RedirectAttributes redirectAttributes) {
 //        System.out.println("RoleId to update: "+ selectedRole.getId());
         String growlMsg = "Role updated successfully";
 
@@ -64,7 +66,7 @@ public class RoleController {
 
     @RequestMapping("/searchRoles")
     @ResponseBody
-    public List<Role> searchRoles(String searchValue) {
+    public List<RoleModel> searchRoles(String searchValue) {
         return roleService.customSearchRoles(searchValue);
     }
 }

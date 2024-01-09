@@ -217,4 +217,17 @@ public class DTOServiceImpl implements IDTOService {
         return role;
     }
 
+    /**
+     * Entity: Role --> DTO: RoleModel
+     */
+    @Override
+    public RoleModel convertRoleToModel(Role role) {
+        RoleModel model = new RoleModel();
+        model.setName(role.getName());
+        model.setDescription(role.getDescription());
+        model.setId(role.getId());
+
+        return model;
+    }
+
 }

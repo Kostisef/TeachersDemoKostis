@@ -1,6 +1,6 @@
 function searchTeachers(){
     var searchValue = document.getElementById("teacherTableSearch").value;
-    console.log("searchTeachers() called with searchValue: "+searchValue);
+    // console.log("searchTeachers() called with searchValue: "+searchValue);
 
     $.ajax({
         type: "GET",
@@ -54,7 +54,7 @@ function searchTeachers(){
 
 function searchStudents(){
     var searchValue = document.getElementById("studentTableSearch").value;
-    console.log("searchStudents() called with searchValue: "+searchValue);
+    // console.log("searchStudents() called with searchValue: "+searchValue);
 
     $.ajax({
         type: "GET",
@@ -110,7 +110,7 @@ function searchStudents(){
 
 function searchCourses(){
     var searchValue = document.getElementById("courseTableSearch").value;
-    console.log("searchCourses() called with searchValue: "+searchValue);
+    // console.log("searchCourses() called with searchValue: "+searchValue);
 
     $.ajax({
         type: "GET",
@@ -160,7 +160,7 @@ function searchCourses(){
 
 function searchRoles(){
     var searchValue = document.getElementById("roleTableSearch").value;
-    console.log("searchRoles() called with searchValue: "+searchValue);
+    // console.log("searchRoles() called with searchValue: "+searchValue);
 
     $.ajax({
         type: "GET",

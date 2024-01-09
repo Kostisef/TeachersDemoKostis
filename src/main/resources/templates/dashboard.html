@@ -49,18 +49,14 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
 
-    // document.addEventListener("DOMContentLoaded", function() {
-    //    alert('hi');
-    // });
-
     window.onload = function () {
         const hasInfoMsg = [[${successMessage}]];
         const hasErrorMsg = [[${errorMessage}]];
         const hasWelcomeMsg = [[${welcomeMsg}]];
 
-        console.log("hasWelcomeMsg: " + hasWelcomeMsg);
-        console.log("hasInfoMsg: " + hasInfoMsg);
-        console.log("hasErrorMsg: " + hasErrorMsg);
+        // console.log("hasWelcomeMsg: " + hasWelcomeMsg);
+        // console.log("hasInfoMsg: " + hasInfoMsg);
+        // console.log("hasErrorMsg: " + hasErrorMsg);
 
         if (hasInfoMsg) {
             triggerGrowlModal([[${successMessage}]], false); // success growl modal
@@ -84,8 +80,5 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"  crossorigin="anonymous"></script>
-
-<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" crossorigin="anonymous">-->
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>-->
 </body>
 </html>
