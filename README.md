@@ -1,13 +1,7 @@
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.css" rel="stylesheet" type="text/css" />
-
-<div style="text-align: center">
-    <h1>TeachersDemoKostis</h1>
-    <a title="TeachersDemoKostis GitHub Repo Link" style="color: white; font-size: 23px; text-decoration: none;" 
-        href="https://github.com/Kostisef/TeachersDemoKostis">
-        GitHub Repo &zigrarr; <i class="fa-brands fa-github"></i>
-    </a>
-</div>
-<hr>
+# TeachersDemoKostis 
+<a href="https://github.com/Kostisef/TeachersDemoKostis" target="_blank">
+    <img src="https://github.com/devicons/devicon/blob/master/icons/github/github-original-wordmark.svg" title="TeachersDemoKostis GitHub Repo" alt="TeachersDemoKostis GitHub Repo" width="70" height="70"/>
+  </a>
 
 ## (1) Τεχνολογίες που χρησιμοποιήθηκαν: </h2>
 - <b>Back-end: </b> Spring MVC, Spring Security
