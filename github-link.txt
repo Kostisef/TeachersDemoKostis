@@ -1,0 +1,6 @@
+GitHub Profile link: https://github.com/Kostisef
+Project GitHub repo link - TeachersDemoKostis: https://github.com/Kostisef/TeachersDemoKostis
+
+Στο αρχείο Readme.md υπάρχουν αναλυτικές οδηγίες πρόσβασης στην εφαρμογή, καθώς και ανάλυση των λειτουργιών της.
+
+Ευθύμιος Κωστής
